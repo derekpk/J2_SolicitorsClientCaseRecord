@@ -1,0 +1,1425 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+
+<Form version="1.5" maxVersion="1.7">
+  <NonVisualComponents>
+    <Container class="javax.swing.JPanel" name="mainPanel_ClientCaseDetails">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+            <LineBorder/>
+          </Border>
+        </Property>
+        <Property name="enabled" type="boolean" value="false"/>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[670, 458]"/>
+        </Property>
+        <Property name="name" type="java.lang.String" value="mainPanel_ClientCaseDetails" noResource="true"/>
+        <Property name="opaque" type="boolean" value="false"/>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="J2_SolicitorsClientCaseRecordView_mainPanel"/>
+      </AuxValues>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jPanel_ClientrDetails" min="-2" max="-2" attributes="1"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="jPanel_LoadDetails" max="32767" attributes="0"/>
+                      </Group>
+                      <Component id="jPanel_ClientTaskDetails" alignment="0" max="32767" attributes="1"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jPanel_Client" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                          <Component id="jPanel_Case" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jPanel_Task" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="jPanel_GenerateReport" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="21" max="32767" attributes="0"/>
+                          <Component id="jPanel_MainWindow" min="-2" pref="133" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="jPanel_LoadDetails" max="32767" attributes="1"/>
+                      <Component id="jPanel_ClientrDetails" alignment="0" max="32767" attributes="1"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+                  <Component id="jPanel_ClientTaskDetails" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="jPanel_MainWindow" max="32767" attributes="1"/>
+                      <Component id="jPanel_Case" alignment="0" max="32767" attributes="3"/>
+                      <Component id="jPanel_Client" alignment="0" max="32767" attributes="3"/>
+                      <Component id="jPanel_Task" alignment="0" max="32767" attributes="3"/>
+                      <Component id="jPanel_GenerateReport" alignment="0" max="32767" attributes="1"/>
+                  </Group>
+                  <EmptySpace pref="56" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Container class="javax.swing.JPanel" name="jPanel_ClientrDetails">
+          <Properties>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                <TitledBorder title="Client Details">
+                  <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                    <TitledBorder/>
+                  </Border>
+                  <Property name="titleX" resourceKey="jPanel_ClientDetails.border.title"/>
+                  <Property name="font" resourceKey="jPanel_ClientDetails.border.titleFont"/>
+                </TitledBorder>
+              </Border>
+            </Property>
+            <Property name="enabled" type="boolean" value="false"/>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="font" type="java.awt.Font" resourceKey="jPanel_ClientDetails.font"/>
+            <Property name="name" type="java.lang.String" value="jPanel_ClientDetails" noResource="true"/>
+            <Property name="opaque" type="boolean" value="false"/>
+          </Properties>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLabel_ClientID" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jComboBox_ClientID" min="-2" pref="50" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jLabel_ClientName" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jTextField_ClientName" pref="167" max="32767" attributes="1"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jLabel_ClientPhone" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jTextField_ClientPhone" min="-2" pref="85" max="-2" attributes="1"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace pref="33" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jComboBox_ClientID" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel_ClientID" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel_ClientName" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextField_ClientName" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextField_ClientPhone" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel_ClientPhone" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JLabel" name="jLabel_ClientName">
+              <Properties>
+                <Property name="font" type="java.awt.Font" resourceKey="jLabel_ClientName.font"/>
+                <Property name="text" type="java.lang.String" resourceKey="jLabel_ClientName.text"/>
+                <Property name="name" type="java.lang.String" value="jLabel_ClientName" noResource="true"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel_ClientID">
+              <Properties>
+                <Property name="font" type="java.awt.Font" resourceKey="jLabel_ClientID.font"/>
+                <Property name="text" type="java.lang.String" resourceKey="jLabel_ClientID.text"/>
+                <Property name="name" type="java.lang.String" value="jLabel_ClientID" noResource="true"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel_ClientPhone">
+              <Properties>
+                <Property name="font" type="java.awt.Font" resourceKey="jLabel_ClientPhone.font"/>
+                <Property name="text" type="java.lang.String" resourceKey="jLabel_ClientPhone.text"/>
+                <Property name="name" type="java.lang.String" value="jLabel_ClientPhone" noResource="true"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JComboBox" name="jComboBox_ClientID">
+              <Properties>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="0"/>
+                </Property>
+                <Property name="name" type="java.lang.String" value="jComboBox_ClientID" noResource="true"/>
+                <Property name="opaque" type="boolean" value="false"/>
+              </Properties>
+              <Events>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jComboBox_ClientIDItemStateChanged"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jTextField_ClientName">
+              <Properties>
+                <Property name="background" type="java.awt.Color" resourceKey="jTextField_ClientName.background"/>
+                <Property name="editable" type="boolean" value="false"/>
+                <Property name="text" type="java.lang.String" resourceKey="jTextField_ClientName.text"/>
+                <Property name="toolTipText" type="java.lang.String" resourceKey="jTextField_ClientName.toolTipText"/>
+                <Property name="focusable" type="boolean" value="false"/>
+                <Property name="name" type="java.lang.String" value="jTextField_ClientName" noResource="true"/>
+                <Property name="opaque" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jTextField_ClientPhone">
+              <Properties>
+                <Property name="background" type="java.awt.Color" resourceKey="jTextField_ClientPhone.background"/>
+                <Property name="editable" type="boolean" value="false"/>
+                <Property name="text" type="java.lang.String" resourceKey="jTextField_ClientPhone.text"/>
+                <Property name="focusable" type="boolean" value="false"/>
+                <Property name="name" type="java.lang.String" value="jTextField_ClientPhone" noResource="true"/>
+                <Property name="opaque" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="jPanel_ClientTaskDetails">
+          <Properties>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                <TitledBorder title="Case Details">
+                  <Property name="titleX" resourceKey="jPanel_ClientCaseDetails.border.title"/>
+                  <Property name="font" resourceKey="jPanel_ClientCaseDetails.border.titleFont"/>
+                </TitledBorder>
+              </Border>
+            </Property>
+            <Property name="enabled" type="boolean" value="false"/>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="font" type="java.awt.Font" resourceKey="jPanel_ClientCaseDetails.font"/>
+            <Property name="name" type="java.lang.String" value="jPanel_ClientCaseDetails" noResource="true"/>
+            <Property name="opaque" type="boolean" value="false"/>
+          </Properties>
+          <AccessibilityProperties>
+            <Property name="AccessibleContext.accessibleName" type="java.lang.String" resourceKey="jPanel_ClientTaskDetails.AccessibleContext.accessibleName"/>
+            <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" resourceKey="jPanel_ClientTaskDetails.AccessibleContext.accessibleDescription"/>
+          </AccessibilityProperties>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="jRadioButton_CaseOpen" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="jRadioButton_CaseClose" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="jLabel_Cases" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                              <Component id="jComboBox_ClientCases" pref="575" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jLabel_Tasks" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jLabel_TaskDuration" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jTextField_TaskDuration" min="-2" pref="44" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jLabel_TotalBillableHours" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jTextField_TotalBillableHours" min="-2" pref="95" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
+                                      <Component id="jLabel_TaskDate" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="jTextField_TaskDate" pref="160" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Component id="jComboBox_ClientTasks" alignment="0" pref="576" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jComboBox_ClientCases" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel_Cases" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jRadioButton_CaseOpen" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jRadioButton_CaseClose" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jComboBox_ClientTasks" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel_Tasks" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel_TaskDuration" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextField_TaskDuration" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel_TotalBillableHours" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextField_TotalBillableHours" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel_TaskDate" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextField_TaskDate" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="23" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JComboBox" name="jComboBox_ClientCases">
+              <Properties>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="0"/>
+                </Property>
+                <Property name="name" type="java.lang.String" value="jComboBox_ClientCases" noResource="true"/>
+                <Property name="opaque" type="boolean" value="false"/>
+              </Properties>
+              <Events>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jComboBox_ClientCasesItemStateChanged"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel_Cases">
+              <Properties>
+                <Property name="font" type="java.awt.Font" resourceKey="jLabel_Cases.font"/>
+                <Property name="text" type="java.lang.String" resourceKey="jLabel_Cases.text"/>
+                <Property name="name" type="java.lang.String" value="jLabel_Cases" noResource="true"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel_Tasks">
+              <Properties>
+                <Property name="font" type="java.awt.Font" resourceKey="jLabel_Tasks.font"/>
+                <Property name="text" type="java.lang.String" resourceKey="jLabel_Tasks.text"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JComboBox" name="jComboBox_ClientTasks">
+              <Properties>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="0"/>
+                </Property>
+                <Property name="name" type="java.lang.String" value="jComboBox_ClientTasks" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jComboBox_ClientTasksItemStateChanged"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JRadioButton" name="jRadioButton_CaseOpen">
+              <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="j2_solicitorsclientcaserecord.J2_SolicitorsClientCaseRecordView" id="OpenRadioButtonClicked" methodName="OpenRadioButtonClicked"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" resourceKey="jRadioButton_CaseOpen.font"/>
+                <Property name="text" type="java.lang.String" resourceKey="jRadioButton_CaseOpen.text"/>
+                <Property name="name" type="java.lang.String" value="jRadioButton_CaseOpen" noResource="true"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JRadioButton" name="jRadioButton_CaseClose">
+              <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="j2_solicitorsclientcaserecord.J2_SolicitorsClientCaseRecordView" id="CloseRadioButtonClicked" methodName="CloseRadioButtonClicked"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" resourceKey="jRadioButton_CaseClose.font"/>
+                <Property name="text" type="java.lang.String" resourceKey="jRadioButton_CaseClose.text"/>
+                <Property name="name" type="java.lang.String" value="jRadioButton_CaseClose" noResource="true"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel_TaskDuration">
+              <Properties>
+                <Property name="font" type="java.awt.Font" resourceKey="jLabel_TaskDuration.font"/>
+                <Property name="text" type="java.lang.String" resourceKey="jLabel_TaskDuration.text"/>
+                <Property name="toolTipText" type="java.lang.String" resourceKey="jLabel_TaskDuration.toolTipText"/>
+                <Property name="name" type="java.lang.String" value="jLabel_TaskDuration" noResource="true"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel_TaskDate">
+              <Properties>
+                <Property name="font" type="java.awt.Font" resourceKey="jLabel_TaskDate.font"/>
+                <Property name="text" type="java.lang.String" resourceKey="jLabel_TaskDate.text"/>
+                <Property name="name" type="java.lang.String" value="jLabel_TaskDate" noResource="true"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jTextField_TaskDate">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+                <Property name="text" type="java.lang.String" resourceKey="jTextField_TaskDate.text"/>
+                <Property name="name" type="java.lang.String" value="jTextField_TaskDate" noResource="true"/>
+                <Property name="opaque" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel_TotalBillableHours">
+              <Properties>
+                <Property name="font" type="java.awt.Font" resourceKey="jLabel_TotalBillableHours.font"/>
+                <Property name="text" type="java.lang.String" resourceKey="jLabel_TotalBillableHours.text"/>
+                <Property name="name" type="java.lang.String" value="jLabel_TotalBillableHours" noResource="true"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jTextField_TotalBillableHours">
+              <Properties>
+                <Property name="text" type="java.lang.String" resourceKey="jTextField_TotalBillableHours.text"/>
+                <Property name="toolTipText" type="java.lang.String" resourceKey="jTextField_TotalBillableHours.toolTipText"/>
+                <Property name="enabled" type="boolean" value="false"/>
+                <Property name="name" type="java.lang.String" value="jTextField_TotalBillableHours" noResource="true"/>
+                <Property name="opaque" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jTextField_TaskDuration">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+                <Property name="text" type="java.lang.String" resourceKey="jTextField_TaskDuration.text"/>
+                <Property name="toolTipText" type="java.lang.String" resourceKey="jTextField_TaskDuration.toolTipText"/>
+                <Property name="name" type="java.lang.String" value="jTextField_TaskDuration" noResource="true"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="jPanel_Client">
+          <Properties>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                <TitledBorder title="Client">
+                  <Property name="titleX" resourceKey="jPanel_Client.border.title"/>
+                  <Property name="font" resourceKey="jPanel_Client.border.titleFont"/>
+                </TitledBorder>
+              </Border>
+            </Property>
+            <Property name="enabled" type="boolean" value="false"/>
+            <Property name="name" type="java.lang.String" value="jPanel_Client" noResource="true"/>
+          </Properties>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jButton_AddClient" alignment="1" max="32767" attributes="1"/>
+                          <Component id="jButton_DeleteClient" alignment="1" max="32767" attributes="1"/>
+                      </Group>
+                      <EmptySpace pref="22" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jButton_AddClient" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jButton_DeleteClient" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="15" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JButton" name="jButton_AddClient">
+              <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="j2_solicitorsclientcaserecord.J2_SolicitorsClientCaseRecordView" id="AddCient" methodName="AddCient"/>
+                </Property>
+                <Property name="text" type="java.lang.String" resourceKey="jButton_AddClient.text"/>
+                <Property name="toolTipText" type="java.lang.String" resourceKey="jButton_AddClient.toolTipText"/>
+                <Property name="actionCommand" type="java.lang.String" resourceKey="jButton_AddClient.actionCommand"/>
+                <Property name="name" type="java.lang.String" value="jButton_AddClient" noResource="true"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="jButton_DeleteClient">
+              <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="j2_solicitorsclientcaserecord.J2_SolicitorsClientCaseRecordView" id="DeleteClient" methodName="DeleteClient"/>
+                </Property>
+                <Property name="text" type="java.lang.String" resourceKey="jButton_DeleteClient.text"/>
+                <Property name="actionCommand" type="java.lang.String" resourceKey="jButton_DeleteClient.actionCommand"/>
+                <Property name="name" type="java.lang.String" value="jButton_DeleteClient" noResource="true"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="jPanel_Task">
+          <Properties>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                <TitledBorder title="Task">
+                  <Property name="titleX" resourceKey="jPanel_Task.border.title"/>
+                  <Property name="font" resourceKey="jPanel_Task.border.titleFont"/>
+                </TitledBorder>
+              </Border>
+            </Property>
+            <Property name="enabled" type="boolean" value="false"/>
+            <Property name="name" type="java.lang.String" value="jPanel_Task" noResource="true"/>
+          </Properties>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace min="19" pref="19" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="jButton_AddTask" alignment="0" pref="63" max="32767" attributes="1"/>
+                          <Component id="jButton_DeleteTask" alignment="0" max="32767" attributes="1"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jButton_AddTask" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jButton_DeleteTask" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="15" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JButton" name="jButton_AddTask">
+              <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="j2_solicitorsclientcaserecord.J2_SolicitorsClientCaseRecordView" id="AddTask" methodName="AddTask"/>
+                </Property>
+                <Property name="text" type="java.lang.String" resourceKey="jButton_AddTask.text"/>
+                <Property name="toolTipText" type="java.lang.String" resourceKey="jButton_AddTask.toolTipText"/>
+                <Property name="actionCommand" type="java.lang.String" resourceKey="jButton_AddTask.actionCommand"/>
+                <Property name="name" type="java.lang.String" value="jButton_AddTask" noResource="true"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="jButton_DeleteTask">
+              <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="j2_solicitorsclientcaserecord.J2_SolicitorsClientCaseRecordView" id="DeleteTask" methodName="DeleteTask"/>
+                </Property>
+                <Property name="text" type="java.lang.String" resourceKey="jButton_DeleteTask.text"/>
+                <Property name="toolTipText" type="java.lang.String" resourceKey="jButton_DeleteTask.toolTipText"/>
+                <Property name="actionCommand" type="java.lang.String" resourceKey="jButton_DeleteTask.actionCommand"/>
+                <Property name="name" type="java.lang.String" value="jButton_DeleteTask" noResource="true"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="jPanel_Case">
+          <Properties>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                <TitledBorder title="Case">
+                  <Property name="titleX" resourceKey="jPanel_Case.border.title"/>
+                  <Property name="font" resourceKey="jPanel_Case.border.titleFont"/>
+                </TitledBorder>
+              </Border>
+            </Property>
+            <Property name="enabled" type="boolean" value="false"/>
+            <Property name="name" type="java.lang.String" value="jPanel_Case" noResource="true"/>
+          </Properties>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace pref="21" max="32767" attributes="0"/>
+                              <Component id="jButton_DeleteCase" min="-2" max="-2" attributes="1"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                              <Component id="jButton_AddCase" pref="63" max="32767" attributes="1"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jButton_AddCase" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jButton_DeleteCase" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="15" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JButton" name="jButton_AddCase">
+              <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="j2_solicitorsclientcaserecord.J2_SolicitorsClientCaseRecordView" id="AddCase" methodName="AddCase"/>
+                </Property>
+                <Property name="text" type="java.lang.String" resourceKey="jButton_AddCase.text"/>
+                <Property name="actionCommand" type="java.lang.String" resourceKey="jButton_AddCase.actionCommand"/>
+                <Property name="name" type="java.lang.String" value="jButton_AddCase" noResource="true"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="jButton_DeleteCase">
+              <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="j2_solicitorsclientcaserecord.J2_SolicitorsClientCaseRecordView" id="DeleteCase" methodName="DeleteCase"/>
+                </Property>
+                <Property name="text" type="java.lang.String" resourceKey="jButton_DeleteCase.text"/>
+                <Property name="toolTipText" type="java.lang.String" resourceKey="jButton_DeleteCase.toolTipText"/>
+                <Property name="actionCommand" type="java.lang.String" resourceKey="jButton_DeleteCase.actionCommand"/>
+                <Property name="name" type="java.lang.String" value="jButton_DeleteCase" noResource="true"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="jPanel_MainWindow">
+          <Properties>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                <TitledBorder title="Main Window">
+                  <Property name="titleX" resourceKey="jPanel_MainWindow.border.title"/>
+                  <Property name="font" resourceKey="jPanel_MainWindow.border.titleFont"/>
+                </TitledBorder>
+              </Border>
+            </Property>
+            <Property name="enabled" type="boolean" value="false"/>
+            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[107, 104]"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="jPanel_MainWindow" noResource="true"/>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[107, 104]"/>
+            </Property>
+          </Properties>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jButton_MainWindow_Exit" alignment="0" pref="101" max="32767" attributes="0"/>
+                          <Component id="jButton_MainWindow_SaveChanges" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jButton_MainWindow_SaveChanges" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jButton_MainWindow_Exit" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="15" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JButton" name="jButton_MainWindow_SaveChanges">
+              <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="j2_solicitorsclientcaserecord.J2_SolicitorsClientCaseRecordView" id="MainWindow_SaveChanges" methodName="MainWindow_SaveChanges"/>
+                </Property>
+                <Property name="text" type="java.lang.String" resourceKey="jButton_MainWindow_SaveChanges.text"/>
+                <Property name="toolTipText" type="java.lang.String" resourceKey="jButton_MainWindow_SaveChanges.toolTipText"/>
+                <Property name="name" type="java.lang.String" value="jButton_MainWindow_SaveChanges" noResource="true"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="jButton_MainWindow_Exit">
+              <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="j2_solicitorsclientcaserecord.J2_SolicitorsClientCaseRecordView" id="MainWindow_Exit" methodName="MainWindow_Exit"/>
+                </Property>
+                <Property name="text" type="java.lang.String" resourceKey="jButton_MainWindow_Exit.text"/>
+                <Property name="toolTipText" type="java.lang.String" resourceKey="jButton_MainWindow_Exit.toolTipText"/>
+                <Property name="name" type="java.lang.String" value="jButton_MainWindow_Exit" noResource="true"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="jPanel_GenerateReport">
+          <Properties>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                <TitledBorder title="Reports">
+                  <Property name="titleX" resourceKey="jPanel_GenerateReport.border.title"/>
+                  <Property name="font" resourceKey="jPanel_GenerateReport.border.titleFont"/>
+                </TitledBorder>
+              </Border>
+            </Property>
+            <Property name="enabled" type="boolean" value="false"/>
+            <Property name="font" type="java.awt.Font" resourceKey="jPanel_GenerateReport.font"/>
+            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[107, 104]"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="jPanel_GenerateReport" noResource="true"/>
+          </Properties>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jButton_ReportsAllClients" pref="101" max="32767" attributes="0"/>
+                          <Component id="jButton_ReportsCurrentCleint" alignment="0" pref="101" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jButton_ReportsAllClients" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jButton_ReportsCurrentCleint" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="15" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JButton" name="jButton_ReportsAllClients">
+              <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="j2_solicitorsclientcaserecord.J2_SolicitorsClientCaseRecordView" id="Reports_AllClients" methodName="Reports_AllClients"/>
+                </Property>
+                <Property name="text" type="java.lang.String" resourceKey="jButton_ReportsAllClients.text"/>
+                <Property name="name" type="java.lang.String" value="jButton_ReportsAllClients" noResource="true"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="jButton_ReportsCurrentCleint">
+              <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="j2_solicitorsclientcaserecord.J2_SolicitorsClientCaseRecordView" id="ReportsCurrentClient" methodName="ReportsCurrentClient"/>
+                </Property>
+                <Property name="text" type="java.lang.String" resourceKey="jButton_ReportsCurrentCleint.text"/>
+                <Property name="name" type="java.lang.String" value="jButton_ReportsCurrentCleint" noResource="true"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="jPanel_LoadDetails">
+          <Properties>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                <TitledBorder title="Load Details">
+                  <Property name="titleX" resourceKey="jPanel_LoadDetails.border.title"/>
+                  <Property name="font" resourceKey="jPanel_LoadDetails.border.titleFont"/>
+                </TitledBorder>
+              </Border>
+            </Property>
+            <Property name="enabled" type="boolean" value="false"/>
+            <Property name="name" type="java.lang.String" value="jPanel_LoadDetails" noResource="true"/>
+          </Properties>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="jButton_MainailsWindow_LoadDBDetails" alignment="0" max="32767" attributes="1"/>
+                          <Component id="jButton_MainWindow_LoadXmlDetails" alignment="0" pref="92" max="32767" attributes="1"/>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jButton_MainWindow_LoadXmlDetails" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jButton_MainailsWindow_LoadDBDetails" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JButton" name="jButton_MainWindow_LoadXmlDetails">
+              <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="j2_solicitorsclientcaserecord.J2_SolicitorsClientCaseRecordView" id="MainWindow_LoadXMLDetails" methodName="MainWindow_LoadXMLDetails"/>
+                </Property>
+                <Property name="text" type="java.lang.String" resourceKey="jButton_MainWindow_LoadXmlDetails.text"/>
+                <Property name="toolTipText" type="java.lang.String" resourceKey="jButton_MainWindow_LoadXmlDetails.toolTipText"/>
+                <Property name="name" type="java.lang.String" value="jButton_MainWindow_LoadXmlDetails" noResource="true"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="jButton_MainailsWindow_LoadDBDetails">
+              <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="j2_solicitorsclientcaserecord.J2_SolicitorsClientCaseRecordView" id="MainWindow_LoadDBDetails" methodName="MainWindow_LoadDBDetails"/>
+                </Property>
+                <Property name="text" type="java.lang.String" resourceKey="jButton_MainailsWindow_LoadDBDetails.text"/>
+                <Property name="name" type="java.lang.String" value="jButton_MainailsWindow_LoadDBDetails" noResource="true"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JMenuBar" name="menuBar">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="menuBar" noResource="true"/>
+      </Properties>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
+        <Property name="useNullLayout" type="boolean" value="true"/>
+      </Layout>
+      <SubComponents>
+        <Menu class="javax.swing.JMenu" name="fileMenu">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="fileMenu.text"/>
+            <Property name="name" type="java.lang.String" value="fileMenu" noResource="true"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
+          </AuxValues>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="exitMenuItem">
+              <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="org.jdesktop.application.Application" id="quit" methodName="quit"/>
+                </Property>
+                <Property name="name" type="java.lang.String" value="exitMenuItem" noResource="true"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
+              </AuxValues>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="helpMenu">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="helpMenu.text"/>
+            <Property name="name" type="java.lang.String" value="helpMenu" noResource="true"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
+          </AuxValues>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="aboutMenuItem">
+              <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="j2_solicitorsclientcaserecord.J2_SolicitorsClientCaseRecordView" id="showAboutBox" methodName="showAboutBox"/>
+                </Property>
+                <Property name="name" type="java.lang.String" value="aboutMenuItem" noResource="true"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
+              </AuxValues>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPanel" name="statusPanel">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="statusPanel" noResource="true"/>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Component id="statusPanelSeparator" alignment="0" pref="662" max="32767" attributes="0"/>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="statusMessageLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="492" max="32767" attributes="0"/>
+                  <Component id="progressBar" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="statusAnimationLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <Component id="statusPanelSeparator" min="-2" pref="2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="statusMessageLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="statusAnimationLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="progressBar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JSeparator" name="statusPanelSeparator">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="statusPanelSeparator" noResource="true"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JLabel" name="statusMessageLabel">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="statusMessageLabel" noResource="true"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="false"/>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="2"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JLabel" name="statusAnimationLabel">
+          <Properties>
+            <Property name="horizontalAlignment" type="int" value="2"/>
+            <Property name="name" type="java.lang.String" value="statusAnimationLabel" noResource="true"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="false"/>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="2"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JProgressBar" name="progressBar">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="progressBar" noResource="true"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="false"/>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="2"/>
+          </AuxValues>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JDialog" name="jDialog_AddClient">
+      <Properties>
+        <Property name="title" type="java.lang.String" resourceKey="jDialog_AddClient.title"/>
+        <Property name="locationByPlatform" type="boolean" value="true"/>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[180, 200]"/>
+        </Property>
+        <Property name="modal" type="boolean" value="true"/>
+        <Property name="name" type="java.lang.String" value="jDialog_AddClient" noResource="true"/>
+        <Property name="resizable" type="boolean" value="false"/>
+        <Property name="type" type="java.awt.Window$Type" editor="org.netbeans.modules.form.editors.EnumEditor">
+          <Value id="POPUP"/>
+        </Property>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jLabel_AddNewClient_ID" linkSize="1" pref="72" max="32767" attributes="1"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jTextField_AddNewClient_ID" linkSize="1" pref="72" max="32767" attributes="1"/>
+                          <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jLabel_AddNewClient_Name" linkSize="1" min="-2" max="-2" attributes="1"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jTextField_AddNewClient_Name" linkSize="1" pref="72" max="32767" attributes="1"/>
+                          <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jLabel_AddNewCLient_Phone" linkSize="1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jTextField_AddNewClient_Phone" linkSize="1" pref="72" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jButton_AddNewClient_OK" linkSize="1" min="-2" pref="72" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jButton_AddNewClient_Cancel" linkSize="1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="20" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jLabel_AddNewClient_ID" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jTextField_AddNewClient_ID" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jLabel_AddNewClient_Name" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                      <Component id="jTextField_AddNewClient_Name" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jLabel_AddNewCLient_Phone" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jTextField_AddNewClient_Phone" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jButton_AddNewClient_OK" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButton_AddNewClient_Cancel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="19" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JTextField" name="jTextField_AddNewClient_ID">
+          <Properties>
+            <Property name="enabled" type="boolean" value="false"/>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="name" type="java.lang.String" value="jTextField_AddNewClient_ID" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="jTextField_AddNewClient_Name">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="jTextField_AddNewClient_Name.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="jTextField_AddNewClient_Name.toolTipText"/>
+            <Property name="name" type="java.lang.String" value="jTextField_AddNewClient_Name" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel_AddNewClient_ID">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="jLabel_AddNewClient_ID.text"/>
+            <Property name="name" type="java.lang.String" value="jLabel_AddNewClient_ID" noResource="true"/>
+          </Properties>
+          <AccessibilityProperties>
+            <Property name="AccessibleContext.accessibleName" type="java.lang.String" resourceKey="jLabel_AddClientID.AccessibleContext.accessibleName"/>
+          </AccessibilityProperties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="J2_SolicitorsClientCaseRecordView_jLabel"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel_AddNewClient_Name">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="jLabel_AddNewClient_Name.text"/>
+            <Property name="name" type="java.lang.String" value="jLabel_AddNewClient_Name" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel_AddNewCLient_Phone">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="jLabel_AddNewCLient_Phone.text"/>
+            <Property name="name" type="java.lang.String" value="jLabel_AddNewCLient_Phone" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton_AddNewClient_OK">
+          <Properties>
+            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+              <action class="j2_solicitorsclientcaserecord.J2_SolicitorsClientCaseRecordView" id="AddNewClient_OK" methodName="AddNewClient_OK"/>
+            </Property>
+            <Property name="text" type="java.lang.String" resourceKey="jButton_AddNewClient_OK.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="jButton_AddNewClient_OK.toolTipText"/>
+            <Property name="name" type="java.lang.String" value="jButton_AddNewClient_OK" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton_AddNewClient_Cancel">
+          <Properties>
+            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+              <action class="j2_solicitorsclientcaserecord.J2_SolicitorsClientCaseRecordView" id="AddNewClient_Cancel" methodName="AddNewClient_Cancel"/>
+            </Property>
+            <Property name="text" type="java.lang.String" resourceKey="jButton_AddNewClient_Cancel.text"/>
+            <Property name="name" type="java.lang.String" value="jButton_AddNewClient_Cancel" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="jTextField_AddNewClient_Phone">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="jTextField_AddNewClient_Phone.text"/>
+            <Property name="name" type="java.lang.String" value="jTextField_AddNewClient_Phone" noResource="true"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Component class="javax.swing.ButtonGroup" name="buttonGroup1">
+    </Component>
+    <Container class="javax.swing.JDialog" name="jDialog_AddNewCase">
+      <Properties>
+        <Property name="title" type="java.lang.String" resourceKey="jDialog_AddNewCase.title"/>
+        <Property name="alwaysOnTop" type="boolean" value="true"/>
+        <Property name="locationByPlatform" type="boolean" value="true"/>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[600, 150]"/>
+        </Property>
+        <Property name="modal" type="boolean" value="true"/>
+        <Property name="name" type="java.lang.String" value="jDialog_AddNewCase" noResource="true"/>
+        <Property name="resizable" type="boolean" value="false"/>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jButton_AddNewCase_OK" min="-2" pref="68" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="jButton_AddNewCase_Cancel" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jLabel_AddNewCase" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="jTextField_AddNewCase_ID" min="-2" pref="485" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace pref="23" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jTextField_AddNewCase_ID" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel_AddNewCase" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jButton_AddNewCase_Cancel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButton_AddNewCase_OK" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JTextField" name="jTextField_AddNewCase_ID">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="jTextField_AddNewCase_ID.text"/>
+            <Property name="name" type="java.lang.String" value="jTextField_AddNewCase_ID" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel_AddNewCase">
+          <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="jLabel_AddNewCase.font"/>
+            <Property name="text" type="java.lang.String" resourceKey="jLabel_AddNewCase.text"/>
+            <Property name="name" type="java.lang.String" value="jLabel_AddNewCase" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton_AddNewCase_OK">
+          <Properties>
+            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+              <action class="j2_solicitorsclientcaserecord.J2_SolicitorsClientCaseRecordView" id="AddNewCase_OK" methodName="AddNewCase_OK"/>
+            </Property>
+            <Property name="text" type="java.lang.String" resourceKey="jButton_AddNewCase_OK.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="jButton_AddNewCase_OK.toolTipText"/>
+            <Property name="name" type="java.lang.String" value="jButton_AddNewCase_OK" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton_AddNewCase_Cancel">
+          <Properties>
+            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+              <action class="j2_solicitorsclientcaserecord.J2_SolicitorsClientCaseRecordView" id="AddNewCase_Cancel" methodName="AddNewCase_Cancel"/>
+            </Property>
+            <Property name="text" type="java.lang.String" resourceKey="jButton_AddNewCase_Cancel.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="jButton_AddNewCase_Cancel.toolTipText"/>
+            <Property name="name" type="java.lang.String" value="jButton_AddNewCase_Cancel" noResource="true"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JDialog" name="jDialog_AddNewTask">
+      <Properties>
+        <Property name="title" type="java.lang.String" resourceKey="jDialog_AddNewTask.title"/>
+        <Property name="locationByPlatform" type="boolean" value="true"/>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[600, 140]"/>
+        </Property>
+        <Property name="modal" type="boolean" value="true"/>
+        <Property name="name" type="java.lang.String" value="jDialog_AddNewTask" noResource="true"/>
+        <Property name="resizable" type="boolean" value="false"/>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="jLabel_AddNewTask_Task" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel_AddNewTask_Duration" alignment="1" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Component id="jComboBox_AddNewTask_Duration" min="-2" pref="77" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="jLabel_AddNewTask_Date" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="jTextField_AddNewTask_Date" min="-2" pref="127" max="-2" attributes="0"/>
+                          <EmptySpace pref="89" max="32767" attributes="0"/>
+                          <Component id="jButton_AddNewTask_OK" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="jButtonAddNewTask_Cancel" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="jTextField_AddNewTask_Task" pref="477" max="32767" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jTextField_AddNewTask_Task" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel_AddNewTask_Task" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jButtonAddNewTask_Cancel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButton_AddNewTask_OK" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel_AddNewTask_Date" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jTextField_AddNewTask_Date" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jComboBox_AddNewTask_Duration" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel_AddNewTask_Duration" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="jLabel_AddNewTask_Task">
+          <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="jLabel_AddNewTask_Task.font"/>
+            <Property name="text" type="java.lang.String" resourceKey="jLabel_AddNewTask_Task.text"/>
+            <Property name="name" type="java.lang.String" value="jLabel_AddNewTask_Task" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="jTextField_AddNewTask_Task">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="jTextField_AddNewTask_Task.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="jTextField_AddNewTask_Task.toolTipText"/>
+            <Property name="name" type="java.lang.String" value="jTextField_AddNewTask_Task" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton_AddNewTask_OK">
+          <Properties>
+            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+              <action class="j2_solicitorsclientcaserecord.J2_SolicitorsClientCaseRecordView" id="AddNewTask_OK" methodName="AddNewTask_OK"/>
+            </Property>
+            <Property name="text" type="java.lang.String" resourceKey="jButton_AddNewTask_OK.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="jButton_AddNewTask_OK.toolTipText"/>
+            <Property name="name" type="java.lang.String" value="jButton_AddNewTask_OK" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButtonAddNewTask_Cancel">
+          <Properties>
+            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+              <action class="j2_solicitorsclientcaserecord.J2_SolicitorsClientCaseRecordView" id="AddNewTask_Cancel" methodName="AddNewTask_Cancel"/>
+            </Property>
+            <Property name="text" type="java.lang.String" resourceKey="jButtonAddNewTask_Cancel.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="jButtonAddNewTask_Cancel.toolTipText"/>
+            <Property name="name" type="java.lang.String" value="jButtonAddNewTask_Cancel" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel_AddNewTask_Duration">
+          <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="jLabel_AddNewTask_Duration.font"/>
+            <Property name="text" type="java.lang.String" resourceKey="jLabel_AddNewTask_Duration.text"/>
+            <Property name="name" type="java.lang.String" value="jLabel_AddNewTask_Duration" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="jComboBox_AddNewTask_Duration">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="49">
+                <StringItem index="0" value="0"/>
+                <StringItem index="1" value="0.5"/>
+                <StringItem index="2" value="1"/>
+                <StringItem index="3" value="1.5"/>
+                <StringItem index="4" value="2"/>
+                <StringItem index="5" value="2.5"/>
+                <StringItem index="6" value="3"/>
+                <StringItem index="7" value="3.5"/>
+                <StringItem index="8" value="4"/>
+                <StringItem index="9" value="4.5"/>
+                <StringItem index="10" value="5"/>
+                <StringItem index="11" value="5.5"/>
+                <StringItem index="12" value="6"/>
+                <StringItem index="13" value="6.5"/>
+                <StringItem index="14" value="7"/>
+                <StringItem index="15" value="7.5"/>
+                <StringItem index="16" value="8"/>
+                <StringItem index="17" value="8.5"/>
+                <StringItem index="18" value="9"/>
+                <StringItem index="19" value="9.5"/>
+                <StringItem index="20" value="10"/>
+                <StringItem index="21" value="10.5"/>
+                <StringItem index="22" value="11"/>
+                <StringItem index="23" value="11.5"/>
+                <StringItem index="24" value="12"/>
+                <StringItem index="25" value="12.5"/>
+                <StringItem index="26" value="13"/>
+                <StringItem index="27" value="13.5"/>
+                <StringItem index="28" value="14"/>
+                <StringItem index="29" value="14.5"/>
+                <StringItem index="30" value="15"/>
+                <StringItem index="31" value="15.5"/>
+                <StringItem index="32" value="16"/>
+                <StringItem index="33" value="16.5"/>
+                <StringItem index="34" value="17"/>
+                <StringItem index="35" value="17.5"/>
+                <StringItem index="36" value="18"/>
+                <StringItem index="37" value="18.5"/>
+                <StringItem index="38" value="19"/>
+                <StringItem index="39" value="19.5"/>
+                <StringItem index="40" value="20"/>
+                <StringItem index="41" value="20.5"/>
+                <StringItem index="42" value="21"/>
+                <StringItem index="43" value="21.5"/>
+                <StringItem index="44" value="22"/>
+                <StringItem index="45" value="22.5"/>
+                <StringItem index="46" value="23"/>
+                <StringItem index="47" value="23.5"/>
+                <StringItem index="48" value="24"/>
+              </StringArray>
+            </Property>
+            <Property name="name" type="java.lang.String" value="jComboBox_AddNewTask_Duration" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel_AddNewTask_Date">
+          <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="jLabel_AddNewTask_Date.font"/>
+            <Property name="text" type="java.lang.String" resourceKey="jLabel_AddNewTask_Date.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="jLabel_AddNewTask_Date.toolTipText"/>
+            <Property name="name" type="java.lang.String" value="jLabel_AddNewTask_Date" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="jTextField_AddNewTask_Date">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="jTextField_AddNewTask_Date.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="jTextField_AddNewTask_Date.toolTipText"/>
+            <Property name="name" type="java.lang.String" value="jTextField_AddNewTask_Date" noResource="true"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JDialog" name="jDialog_MessageBox">
+      <Properties>
+        <Property name="title" type="java.lang.String" resourceKey="jDialog_MessageBox.title"/>
+        <Property name="locationByPlatform" type="boolean" value="true"/>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[400, 300]"/>
+        </Property>
+        <Property name="modal" type="boolean" value="true"/>
+        <Property name="name" type="java.lang.String" value="jDialog_MessageBox" noResource="true"/>
+        <Property name="resizable" type="boolean" value="false"/>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jScrollPane1" pref="380" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="147" max="-2" attributes="0"/>
+                          <Component id="jButton_ClientDetailsMessage_OK" min="-2" pref="94" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jScrollPane1" pref="159" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                  <Component id="jButton_ClientDetailsMessage_OK" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="jScrollPane1" noResource="true"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+          </AuxValues>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JTextArea" name="jTextArea_ClientDetailsMessage">
+              <Properties>
+                <Property name="columns" type="int" value="20"/>
+                <Property name="font" type="java.awt.Font" resourceKey="jTextArea_ClientDetailsMessage.font"/>
+                <Property name="rows" type="int" value="5"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                    <LineBorder/>
+                  </Border>
+                </Property>
+                <Property name="enabled" type="boolean" value="false"/>
+                <Property name="focusable" type="boolean" value="false"/>
+                <Property name="name" type="java.lang.String" value="jTextArea_ClientDetailsMessage" noResource="true"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Component class="javax.swing.JButton" name="jButton_ClientDetailsMessage_OK">
+          <Properties>
+            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+              <action class="j2_solicitorsclientcaserecord.J2_SolicitorsClientCaseRecordView" id="ClientDetailsMessage_OK" methodName="ClientDetailsMessage_OK"/>
+            </Property>
+            <Property name="text" type="java.lang.String" resourceKey="jButton_ClientDetailsMessage_OK.text"/>
+            <Property name="name" type="java.lang.String" value="jButton_ClientDetailsMessage_OK" noResource="true"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+  </NonVisualComponents>
+  <Properties>
+    <Property name="component" type="javax.swing.JComponent" editor="org.netbeans.modules.form.ComponentChooserEditor">
+      <ComponentRef name="mainPanel_ClientCaseDetails"/>
+    </Property>
+  </Properties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="2"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,1,-54,0,0,2,-98"/>
+  </AuxValues>
+</Form>

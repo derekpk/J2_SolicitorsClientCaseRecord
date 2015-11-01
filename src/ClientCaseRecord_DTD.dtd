@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!--
+    TODO define vocabulary identification
+    PUBLIC ID: -//vendor//vocabulary//EN
+    SYSTEM ID: http://server/path/ClientCaseRecord_DTD.dtd
+
+-->
+
+<!--
+    An example how to use this DTD from your XML document:
+
+    <?xml version="1.0"?>
+
+    <!DOCTYPE ClientRecords SYSTEM "ClientCaseRecord_DTD.dtd">
+
+    <ClientRecords>
+    ...
+    </ClientRecords>
+-->
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT ClientRecords (Client)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT Client (Cases|Phone|Name|ID)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT ID (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT Name (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT Phone (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT Cases (Case)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT Case (Tasks|CaseState|CaseID)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT CaseID (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT CaseState (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT Tasks (Task)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT Task (Description|Duration|Date|TaskID)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT TaskID (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT Date (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT Duration (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT Description (#PCDATA)>

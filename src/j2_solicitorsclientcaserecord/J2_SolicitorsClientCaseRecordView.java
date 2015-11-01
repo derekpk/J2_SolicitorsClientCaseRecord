@@ -1,0 +1,2004 @@
+/*
+ * J2_SolicitorsClientCaseRecordView.java
+ */
+
+package j2_solicitorsclientcaserecord;
+
+import org.jdesktop.application.Action;
+import org.jdesktop.application.ResourceMap;
+import org.jdesktop.application.SingleFrameApplication;
+import org.jdesktop.application.FrameView;
+import org.jdesktop.application.TaskMonitor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.Timer;
+import javax.swing.Icon;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JFileChooser;
+
+//import org.w3c.dom.Document;
+import org.w3c.dom.*;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.DocumentBuilder;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException; 
+
+//The next 4 imports were added to create a new Dom, add the client details and save to file
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import java.io.*;
+
+import com.mysql.jdbc.Driver;
+import java.sql.*;
+
+import ClientCaseRecords.*;
+
+/**
+ * The application's main frame.
+ */
+
+public class J2_SolicitorsClientCaseRecordView extends FrameView {
+    
+    public ClientRecords objClientRecords = new ClientRecords();
+    int intMessageCount = 0;
+    
+    
+    public J2_SolicitorsClientCaseRecordView(SingleFrameApplication app) {
+        super(app);
+
+        initComponents();
+
+        // status bar initialization - message timeout, idle icon and busy animation, etc
+        ResourceMap resourceMap = getResourceMap();
+        int messageTimeout = resourceMap.getInteger("StatusBar.messageTimeout");
+        messageTimer = new Timer(messageTimeout, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                statusMessageLabel.setText("");
+            }
+        });
+        messageTimer.setRepeats(false);
+        int busyAnimationRate = resourceMap.getInteger("StatusBar.busyAnimationRate");
+        for (int i = 0; i < busyIcons.length; i++) {
+            busyIcons[i] = resourceMap.getIcon("StatusBar.busyIcons[" + i + "]");
+        }
+        busyIconTimer = new Timer(busyAnimationRate, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                busyIconIndex = (busyIconIndex + 1) % busyIcons.length;
+                statusAnimationLabel.setIcon(busyIcons[busyIconIndex]);
+            }
+        });
+        idleIcon = resourceMap.getIcon("StatusBar.idleIcon");
+        statusAnimationLabel.setIcon(idleIcon);
+        progressBar.setVisible(false);
+
+        // connecting action tasks to status bar via TaskMonitor
+        TaskMonitor taskMonitor = new TaskMonitor(getApplication().getContext());
+        taskMonitor.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                String propertyName = evt.getPropertyName();
+                if ("started".equals(propertyName)) {
+                    if (!busyIconTimer.isRunning()) {
+                        statusAnimationLabel.setIcon(busyIcons[0]);
+                        busyIconIndex = 0;
+                        busyIconTimer.start();
+                    }
+                    progressBar.setVisible(true);
+                    progressBar.setIndeterminate(true);
+                } else if ("done".equals(propertyName)) {
+                    busyIconTimer.stop();
+                    statusAnimationLabel.setIcon(idleIcon);
+                    progressBar.setVisible(false);
+                    progressBar.setValue(0);
+                } else if ("message".equals(propertyName)) {
+                    String text = (String)(evt.getNewValue());
+                    statusMessageLabel.setText((text == null) ? "" : text);
+                    messageTimer.restart();
+                } else if ("progress".equals(propertyName)) {
+                    int value = (Integer)(evt.getNewValue());
+                    progressBar.setVisible(true);
+                    progressBar.setIndeterminate(false);
+                    progressBar.setValue(value);
+                }
+            }
+        });
+
+        buttonGroup1.add(jRadioButton_CaseOpen);
+        buttonGroup1.add(jRadioButton_CaseClose);
+    }
+    @Action
+    public void showAboutBox() {
+        if (aboutBox == null) {
+            JFrame mainFrame = J2_SolicitorsClientCaseRecordApp.getApplication().getMainFrame();
+            aboutBox = new J2_SolicitorsClientCaseRecordAboutBox(mainFrame);
+            aboutBox.setLocationRelativeTo(mainFrame);
+        }
+        J2_SolicitorsClientCaseRecordApp.getApplication().show(aboutBox);
+    }
+
+    /** This method is called from within the constructor to
+     * initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is
+     * always regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        mainPanel_ClientCaseDetails = new javax.swing.JPanel();
+        jPanel_ClientrDetails = new javax.swing.JPanel();
+        jLabel_ClientName = new javax.swing.JLabel();
+        jLabel_ClientID = new javax.swing.JLabel();
+        jLabel_ClientPhone = new javax.swing.JLabel();
+        jComboBox_ClientID = new javax.swing.JComboBox();
+        jTextField_ClientName = new javax.swing.JTextField();
+        jTextField_ClientPhone = new javax.swing.JTextField();
+        jPanel_ClientTaskDetails = new javax.swing.JPanel();
+        jComboBox_ClientCases = new javax.swing.JComboBox();
+        jLabel_Cases = new javax.swing.JLabel();
+        jLabel_Tasks = new javax.swing.JLabel();
+        jComboBox_ClientTasks = new javax.swing.JComboBox();
+        jRadioButton_CaseOpen = new javax.swing.JRadioButton();
+        jRadioButton_CaseClose = new javax.swing.JRadioButton();
+        jLabel_TaskDuration = new javax.swing.JLabel();
+        jLabel_TaskDate = new javax.swing.JLabel();
+        jTextField_TaskDate = new javax.swing.JTextField();
+        jLabel_TotalBillableHours = new javax.swing.JLabel();
+        jTextField_TotalBillableHours = new javax.swing.JTextField();
+        jTextField_TaskDuration = new javax.swing.JTextField();
+        jPanel_Client = new javax.swing.JPanel();
+        jButton_AddClient = new javax.swing.JButton();
+        jButton_DeleteClient = new javax.swing.JButton();
+        jPanel_Task = new javax.swing.JPanel();
+        jButton_AddTask = new javax.swing.JButton();
+        jButton_DeleteTask = new javax.swing.JButton();
+        jPanel_Case = new javax.swing.JPanel();
+        jButton_AddCase = new javax.swing.JButton();
+        jButton_DeleteCase = new javax.swing.JButton();
+        jPanel_MainWindow = new javax.swing.JPanel();
+        jButton_MainWindow_SaveChanges = new javax.swing.JButton();
+        jButton_MainWindow_Exit = new javax.swing.JButton();
+        jPanel_GenerateReport = new javax.swing.JPanel();
+        jButton_ReportsAllClients = new javax.swing.JButton();
+        jButton_ReportsCurrentCleint = new javax.swing.JButton();
+        jPanel_LoadDetails = new javax.swing.JPanel();
+        jButton_MainWindow_LoadXmlDetails = new javax.swing.JButton();
+        jButton_MainailsWindow_LoadDBDetails = new javax.swing.JButton();
+        menuBar = new javax.swing.JMenuBar();
+        javax.swing.JMenu fileMenu = new javax.swing.JMenu();
+        javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
+        javax.swing.JMenu helpMenu = new javax.swing.JMenu();
+        javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
+        statusPanel = new javax.swing.JPanel();
+        javax.swing.JSeparator statusPanelSeparator = new javax.swing.JSeparator();
+        statusMessageLabel = new javax.swing.JLabel();
+        statusAnimationLabel = new javax.swing.JLabel();
+        progressBar = new javax.swing.JProgressBar();
+        jDialog_AddClient = new javax.swing.JDialog();
+        jTextField_AddNewClient_ID = new javax.swing.JTextField();
+        jTextField_AddNewClient_Name = new javax.swing.JTextField();
+        jLabel_AddNewClient_ID = new javax.swing.JLabel();
+        jLabel_AddNewClient_Name = new javax.swing.JLabel();
+        jLabel_AddNewCLient_Phone = new javax.swing.JLabel();
+        jButton_AddNewClient_OK = new javax.swing.JButton();
+        jButton_AddNewClient_Cancel = new javax.swing.JButton();
+        jTextField_AddNewClient_Phone = new javax.swing.JTextField();
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        jDialog_AddNewCase = new javax.swing.JDialog();
+        jTextField_AddNewCase_ID = new javax.swing.JTextField();
+        jLabel_AddNewCase = new javax.swing.JLabel();
+        jButton_AddNewCase_OK = new javax.swing.JButton();
+        jButton_AddNewCase_Cancel = new javax.swing.JButton();
+        jDialog_AddNewTask = new javax.swing.JDialog();
+        jLabel_AddNewTask_Task = new javax.swing.JLabel();
+        jTextField_AddNewTask_Task = new javax.swing.JTextField();
+        jButton_AddNewTask_OK = new javax.swing.JButton();
+        jButtonAddNewTask_Cancel = new javax.swing.JButton();
+        jLabel_AddNewTask_Duration = new javax.swing.JLabel();
+        jComboBox_AddNewTask_Duration = new javax.swing.JComboBox();
+        jLabel_AddNewTask_Date = new javax.swing.JLabel();
+        jTextField_AddNewTask_Date = new javax.swing.JTextField();
+        jDialog_MessageBox = new javax.swing.JDialog();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea_ClientDetailsMessage = new javax.swing.JTextArea();
+        jButton_ClientDetailsMessage_OK = new javax.swing.JButton();
+
+        mainPanel_ClientCaseDetails.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        mainPanel_ClientCaseDetails.setEnabled(false);
+        mainPanel_ClientCaseDetails.setMinimumSize(new java.awt.Dimension(670, 458));
+        mainPanel_ClientCaseDetails.setName("mainPanel_ClientCaseDetails"); // NOI18N
+        mainPanel_ClientCaseDetails.setOpaque(false);
+
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(j2_solicitorsclientcaserecord.J2_SolicitorsClientCaseRecordApp.class).getContext().getResourceMap(J2_SolicitorsClientCaseRecordView.class);
+        jPanel_ClientrDetails.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), resourceMap.getString("jPanel_ClientDetails.border.title"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, resourceMap.getFont("jPanel_ClientDetails.border.titleFont"))); // NOI18N
+        jPanel_ClientrDetails.setEnabled(false);
+        jPanel_ClientrDetails.setFocusable(false);
+        jPanel_ClientrDetails.setFont(resourceMap.getFont("jPanel_ClientDetails.font")); // NOI18N
+        jPanel_ClientrDetails.setName("jPanel_ClientDetails"); // NOI18N
+        jPanel_ClientrDetails.setOpaque(false);
+
+        jLabel_ClientName.setFont(resourceMap.getFont("jLabel_ClientName.font")); // NOI18N
+        jLabel_ClientName.setText(resourceMap.getString("jLabel_ClientName.text")); // NOI18N
+        jLabel_ClientName.setName("jLabel_ClientName"); // NOI18N
+
+        jLabel_ClientID.setFont(resourceMap.getFont("jLabel_ClientID.font")); // NOI18N
+        jLabel_ClientID.setText(resourceMap.getString("jLabel_ClientID.text")); // NOI18N
+        jLabel_ClientID.setName("jLabel_ClientID"); // NOI18N
+
+        jLabel_ClientPhone.setFont(resourceMap.getFont("jLabel_ClientPhone.font")); // NOI18N
+        jLabel_ClientPhone.setText(resourceMap.getString("jLabel_ClientPhone.text")); // NOI18N
+        jLabel_ClientPhone.setName("jLabel_ClientPhone"); // NOI18N
+
+        jComboBox_ClientID.setName("jComboBox_ClientID"); // NOI18N
+        jComboBox_ClientID.setOpaque(false);
+        jComboBox_ClientID.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox_ClientIDItemStateChanged(evt);
+            }
+        });
+
+        jTextField_ClientName.setBackground(resourceMap.getColor("jTextField_ClientName.background")); // NOI18N
+        jTextField_ClientName.setEditable(false);
+        jTextField_ClientName.setText(resourceMap.getString("jTextField_ClientName.text")); // NOI18N
+        jTextField_ClientName.setToolTipText(resourceMap.getString("jTextField_ClientName.toolTipText")); // NOI18N
+        jTextField_ClientName.setFocusable(false);
+        jTextField_ClientName.setName("jTextField_ClientName"); // NOI18N
+        jTextField_ClientName.setOpaque(false);
+
+        jTextField_ClientPhone.setBackground(resourceMap.getColor("jTextField_ClientPhone.background")); // NOI18N
+        jTextField_ClientPhone.setEditable(false);
+        jTextField_ClientPhone.setText(resourceMap.getString("jTextField_ClientPhone.text")); // NOI18N
+        jTextField_ClientPhone.setFocusable(false);
+        jTextField_ClientPhone.setName("jTextField_ClientPhone"); // NOI18N
+        jTextField_ClientPhone.setOpaque(false);
+
+        javax.swing.GroupLayout jPanel_ClientrDetailsLayout = new javax.swing.GroupLayout(jPanel_ClientrDetails);
+        jPanel_ClientrDetails.setLayout(jPanel_ClientrDetailsLayout);
+        jPanel_ClientrDetailsLayout.setHorizontalGroup(
+            jPanel_ClientrDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_ClientrDetailsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel_ClientID)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jComboBox_ClientID, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel_ClientName)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField_ClientName, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel_ClientPhone)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField_ClientPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel_ClientrDetailsLayout.setVerticalGroup(
+            jPanel_ClientrDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_ClientrDetailsLayout.createSequentialGroup()
+                .addContainerGap(33, Short.MAX_VALUE)
+                .addGroup(jPanel_ClientrDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox_ClientID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel_ClientID)
+                    .addComponent(jLabel_ClientName)
+                    .addComponent(jTextField_ClientName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField_ClientPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel_ClientPhone))
+                .addGap(28, 28, 28))
+        );
+
+        jPanel_ClientTaskDetails.setBorder(javax.swing.BorderFactory.createTitledBorder(null, resourceMap.getString("jPanel_ClientCaseDetails.border.title"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, resourceMap.getFont("jPanel_ClientCaseDetails.border.titleFont"))); // NOI18N
+        jPanel_ClientTaskDetails.setEnabled(false);
+        jPanel_ClientTaskDetails.setFocusable(false);
+        jPanel_ClientTaskDetails.setFont(resourceMap.getFont("jPanel_ClientCaseDetails.font")); // NOI18N
+        jPanel_ClientTaskDetails.setName("jPanel_ClientCaseDetails"); // NOI18N
+        jPanel_ClientTaskDetails.setOpaque(false);
+
+        jComboBox_ClientCases.setName("jComboBox_ClientCases"); // NOI18N
+        jComboBox_ClientCases.setOpaque(false);
+        jComboBox_ClientCases.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox_ClientCasesItemStateChanged(evt);
+            }
+        });
+
+        jLabel_Cases.setFont(resourceMap.getFont("jLabel_Cases.font")); // NOI18N
+        jLabel_Cases.setText(resourceMap.getString("jLabel_Cases.text")); // NOI18N
+        jLabel_Cases.setName("jLabel_Cases"); // NOI18N
+
+        jLabel_Tasks.setFont(resourceMap.getFont("jLabel_Tasks.font")); // NOI18N
+        jLabel_Tasks.setText(resourceMap.getString("jLabel_Tasks.text")); // NOI18N
+
+        jComboBox_ClientTasks.setName("jComboBox_ClientTasks"); // NOI18N
+        jComboBox_ClientTasks.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox_ClientTasksItemStateChanged(evt);
+            }
+        });
+
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(j2_solicitorsclientcaserecord.J2_SolicitorsClientCaseRecordApp.class).getContext().getActionMap(J2_SolicitorsClientCaseRecordView.class, this);
+        jRadioButton_CaseOpen.setAction(actionMap.get("OpenRadioButtonClicked")); // NOI18N
+        jRadioButton_CaseOpen.setFont(resourceMap.getFont("jRadioButton_CaseOpen.font")); // NOI18N
+        jRadioButton_CaseOpen.setText(resourceMap.getString("jRadioButton_CaseOpen.text")); // NOI18N
+        jRadioButton_CaseOpen.setName("jRadioButton_CaseOpen"); // NOI18N
+
+        jRadioButton_CaseClose.setAction(actionMap.get("CloseRadioButtonClicked")); // NOI18N
+        jRadioButton_CaseClose.setFont(resourceMap.getFont("jRadioButton_CaseClose.font")); // NOI18N
+        jRadioButton_CaseClose.setText(resourceMap.getString("jRadioButton_CaseClose.text")); // NOI18N
+        jRadioButton_CaseClose.setName("jRadioButton_CaseClose"); // NOI18N
+
+        jLabel_TaskDuration.setFont(resourceMap.getFont("jLabel_TaskDuration.font")); // NOI18N
+        jLabel_TaskDuration.setText(resourceMap.getString("jLabel_TaskDuration.text")); // NOI18N
+        jLabel_TaskDuration.setToolTipText(resourceMap.getString("jLabel_TaskDuration.toolTipText")); // NOI18N
+        jLabel_TaskDuration.setName("jLabel_TaskDuration"); // NOI18N
+
+        jLabel_TaskDate.setFont(resourceMap.getFont("jLabel_TaskDate.font")); // NOI18N
+        jLabel_TaskDate.setText(resourceMap.getString("jLabel_TaskDate.text")); // NOI18N
+        jLabel_TaskDate.setName("jLabel_TaskDate"); // NOI18N
+
+        jTextField_TaskDate.setEditable(false);
+        jTextField_TaskDate.setText(resourceMap.getString("jTextField_TaskDate.text")); // NOI18N
+        jTextField_TaskDate.setName("jTextField_TaskDate"); // NOI18N
+        jTextField_TaskDate.setOpaque(false);
+
+        jLabel_TotalBillableHours.setFont(resourceMap.getFont("jLabel_TotalBillableHours.font")); // NOI18N
+        jLabel_TotalBillableHours.setText(resourceMap.getString("jLabel_TotalBillableHours.text")); // NOI18N
+        jLabel_TotalBillableHours.setName("jLabel_TotalBillableHours"); // NOI18N
+
+        jTextField_TotalBillableHours.setText(resourceMap.getString("jTextField_TotalBillableHours.text")); // NOI18N
+        jTextField_TotalBillableHours.setToolTipText(resourceMap.getString("jTextField_TotalBillableHours.toolTipText")); // NOI18N
+        jTextField_TotalBillableHours.setEnabled(false);
+        jTextField_TotalBillableHours.setName("jTextField_TotalBillableHours"); // NOI18N
+        jTextField_TotalBillableHours.setOpaque(false);
+
+        jTextField_TaskDuration.setEditable(false);
+        jTextField_TaskDuration.setText(resourceMap.getString("jTextField_TaskDuration.text")); // NOI18N
+        jTextField_TaskDuration.setToolTipText(resourceMap.getString("jTextField_TaskDuration.toolTipText")); // NOI18N
+        jTextField_TaskDuration.setName("jTextField_TaskDuration"); // NOI18N
+
+        javax.swing.GroupLayout jPanel_ClientTaskDetailsLayout = new javax.swing.GroupLayout(jPanel_ClientTaskDetails);
+        jPanel_ClientTaskDetails.setLayout(jPanel_ClientTaskDetailsLayout);
+        jPanel_ClientTaskDetailsLayout.setHorizontalGroup(
+            jPanel_ClientTaskDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_ClientTaskDetailsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel_ClientTaskDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_ClientTaskDetailsLayout.createSequentialGroup()
+                        .addComponent(jRadioButton_CaseOpen)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jRadioButton_CaseClose)
+                        .addGap(8, 8, 8))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_ClientTaskDetailsLayout.createSequentialGroup()
+                        .addComponent(jLabel_Cases)
+                        .addGap(10, 10, 10)
+                        .addComponent(jComboBox_ClientCases, 0, 575, Short.MAX_VALUE))
+                    .addGroup(jPanel_ClientTaskDetailsLayout.createSequentialGroup()
+                        .addComponent(jLabel_Tasks)
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel_ClientTaskDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel_ClientTaskDetailsLayout.createSequentialGroup()
+                                .addComponent(jLabel_TaskDuration)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextField_TaskDuration, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel_TotalBillableHours)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextField_TotalBillableHours, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(64, 64, 64)
+                                .addComponent(jLabel_TaskDate)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTextField_TaskDate, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE))
+                            .addComponent(jComboBox_ClientTasks, 0, 576, Short.MAX_VALUE))))
+                .addContainerGap())
+        );
+        jPanel_ClientTaskDetailsLayout.setVerticalGroup(
+            jPanel_ClientTaskDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_ClientTaskDetailsLayout.createSequentialGroup()
+                .addGroup(jPanel_ClientTaskDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox_ClientCases, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel_Cases))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel_ClientTaskDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButton_CaseOpen)
+                    .addComponent(jRadioButton_CaseClose))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel_ClientTaskDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox_ClientTasks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel_Tasks))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel_ClientTaskDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel_TaskDuration)
+                    .addComponent(jTextField_TaskDuration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel_TotalBillableHours)
+                    .addComponent(jTextField_TotalBillableHours, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel_TaskDate)
+                    .addComponent(jTextField_TaskDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+
+        jPanel_Client.setBorder(javax.swing.BorderFactory.createTitledBorder(null, resourceMap.getString("jPanel_Client.border.title"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, resourceMap.getFont("jPanel_Client.border.titleFont"))); // NOI18N
+        jPanel_Client.setEnabled(false);
+        jPanel_Client.setName("jPanel_Client"); // NOI18N
+
+        jButton_AddClient.setAction(actionMap.get("AddCient")); // NOI18N
+        jButton_AddClient.setText(resourceMap.getString("jButton_AddClient.text")); // NOI18N
+        jButton_AddClient.setToolTipText(resourceMap.getString("jButton_AddClient.toolTipText")); // NOI18N
+        jButton_AddClient.setActionCommand(resourceMap.getString("jButton_AddClient.actionCommand")); // NOI18N
+        jButton_AddClient.setName("jButton_AddClient"); // NOI18N
+
+        jButton_DeleteClient.setAction(actionMap.get("DeleteClient")); // NOI18N
+        jButton_DeleteClient.setText(resourceMap.getString("jButton_DeleteClient.text")); // NOI18N
+        jButton_DeleteClient.setActionCommand(resourceMap.getString("jButton_DeleteClient.actionCommand")); // NOI18N
+        jButton_DeleteClient.setName("jButton_DeleteClient"); // NOI18N
+
+        javax.swing.GroupLayout jPanel_ClientLayout = new javax.swing.GroupLayout(jPanel_Client);
+        jPanel_Client.setLayout(jPanel_ClientLayout);
+        jPanel_ClientLayout.setHorizontalGroup(
+            jPanel_ClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_ClientLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(jPanel_ClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton_AddClient, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton_DeleteClient, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
+        );
+        jPanel_ClientLayout.setVerticalGroup(
+            jPanel_ClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_ClientLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton_AddClient)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton_DeleteClient)
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
+
+        jPanel_Task.setBorder(javax.swing.BorderFactory.createTitledBorder(null, resourceMap.getString("jPanel_Task.border.title"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, resourceMap.getFont("jPanel_Task.border.titleFont"))); // NOI18N
+        jPanel_Task.setEnabled(false);
+        jPanel_Task.setName("jPanel_Task"); // NOI18N
+
+        jButton_AddTask.setAction(actionMap.get("AddTask")); // NOI18N
+        jButton_AddTask.setText(resourceMap.getString("jButton_AddTask.text")); // NOI18N
+        jButton_AddTask.setToolTipText(resourceMap.getString("jButton_AddTask.toolTipText")); // NOI18N
+        jButton_AddTask.setActionCommand(resourceMap.getString("jButton_AddTask.actionCommand")); // NOI18N
+        jButton_AddTask.setName("jButton_AddTask"); // NOI18N
+
+        jButton_DeleteTask.setAction(actionMap.get("DeleteTask")); // NOI18N
+        jButton_DeleteTask.setText(resourceMap.getString("jButton_DeleteTask.text")); // NOI18N
+        jButton_DeleteTask.setToolTipText(resourceMap.getString("jButton_DeleteTask.toolTipText")); // NOI18N
+        jButton_DeleteTask.setActionCommand(resourceMap.getString("jButton_DeleteTask.actionCommand")); // NOI18N
+        jButton_DeleteTask.setName("jButton_DeleteTask"); // NOI18N
+
+        javax.swing.GroupLayout jPanel_TaskLayout = new javax.swing.GroupLayout(jPanel_Task);
+        jPanel_Task.setLayout(jPanel_TaskLayout);
+        jPanel_TaskLayout.setHorizontalGroup(
+            jPanel_TaskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_TaskLayout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(jPanel_TaskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton_AddTask, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
+                    .addComponent(jButton_DeleteTask, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel_TaskLayout.setVerticalGroup(
+            jPanel_TaskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_TaskLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton_AddTask)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton_DeleteTask)
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
+
+        jPanel_Case.setBorder(javax.swing.BorderFactory.createTitledBorder(null, resourceMap.getString("jPanel_Case.border.title"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, resourceMap.getFont("jPanel_Case.border.titleFont"))); // NOI18N
+        jPanel_Case.setEnabled(false);
+        jPanel_Case.setName("jPanel_Case"); // NOI18N
+
+        jButton_AddCase.setAction(actionMap.get("AddCase")); // NOI18N
+        jButton_AddCase.setText(resourceMap.getString("jButton_AddCase.text")); // NOI18N
+        jButton_AddCase.setActionCommand(resourceMap.getString("jButton_AddCase.actionCommand")); // NOI18N
+        jButton_AddCase.setName("jButton_AddCase"); // NOI18N
+
+        jButton_DeleteCase.setAction(actionMap.get("DeleteCase")); // NOI18N
+        jButton_DeleteCase.setText(resourceMap.getString("jButton_DeleteCase.text")); // NOI18N
+        jButton_DeleteCase.setToolTipText(resourceMap.getString("jButton_DeleteCase.toolTipText")); // NOI18N
+        jButton_DeleteCase.setActionCommand(resourceMap.getString("jButton_DeleteCase.actionCommand")); // NOI18N
+        jButton_DeleteCase.setName("jButton_DeleteCase"); // NOI18N
+
+        javax.swing.GroupLayout jPanel_CaseLayout = new javax.swing.GroupLayout(jPanel_Case);
+        jPanel_Case.setLayout(jPanel_CaseLayout);
+        jPanel_CaseLayout.setHorizontalGroup(
+            jPanel_CaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_CaseLayout.createSequentialGroup()
+                .addGroup(jPanel_CaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel_CaseLayout.createSequentialGroup()
+                        .addContainerGap(21, Short.MAX_VALUE)
+                        .addComponent(jButton_DeleteCase))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_CaseLayout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(jButton_AddCase, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel_CaseLayout.setVerticalGroup(
+            jPanel_CaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_CaseLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton_AddCase)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton_DeleteCase)
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
+
+        jPanel_MainWindow.setBorder(javax.swing.BorderFactory.createTitledBorder(null, resourceMap.getString("jPanel_MainWindow.border.title"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, resourceMap.getFont("jPanel_MainWindow.border.titleFont"))); // NOI18N
+        jPanel_MainWindow.setEnabled(false);
+        jPanel_MainWindow.setMinimumSize(new java.awt.Dimension(107, 104));
+        jPanel_MainWindow.setName("jPanel_MainWindow"); // NOI18N
+        jPanel_MainWindow.setPreferredSize(new java.awt.Dimension(107, 104));
+
+        jButton_MainWindow_SaveChanges.setAction(actionMap.get("MainWindow_SaveChanges")); // NOI18N
+        jButton_MainWindow_SaveChanges.setText(resourceMap.getString("jButton_MainWindow_SaveChanges.text")); // NOI18N
+        jButton_MainWindow_SaveChanges.setToolTipText(resourceMap.getString("jButton_MainWindow_SaveChanges.toolTipText")); // NOI18N
+        jButton_MainWindow_SaveChanges.setName("jButton_MainWindow_SaveChanges"); // NOI18N
+
+        jButton_MainWindow_Exit.setAction(actionMap.get("MainWindow_Exit")); // NOI18N
+        jButton_MainWindow_Exit.setText(resourceMap.getString("jButton_MainWindow_Exit.text")); // NOI18N
+        jButton_MainWindow_Exit.setToolTipText(resourceMap.getString("jButton_MainWindow_Exit.toolTipText")); // NOI18N
+        jButton_MainWindow_Exit.setName("jButton_MainWindow_Exit"); // NOI18N
+
+        javax.swing.GroupLayout jPanel_MainWindowLayout = new javax.swing.GroupLayout(jPanel_MainWindow);
+        jPanel_MainWindow.setLayout(jPanel_MainWindowLayout);
+        jPanel_MainWindowLayout.setHorizontalGroup(
+            jPanel_MainWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_MainWindowLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel_MainWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton_MainWindow_Exit, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
+                    .addComponent(jButton_MainWindow_SaveChanges))
+                .addContainerGap())
+        );
+        jPanel_MainWindowLayout.setVerticalGroup(
+            jPanel_MainWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_MainWindowLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton_MainWindow_SaveChanges)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton_MainWindow_Exit)
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
+
+        jPanel_GenerateReport.setBorder(javax.swing.BorderFactory.createTitledBorder(null, resourceMap.getString("jPanel_GenerateReport.border.title"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, resourceMap.getFont("jPanel_GenerateReport.border.titleFont"))); // NOI18N
+        jPanel_GenerateReport.setEnabled(false);
+        jPanel_GenerateReport.setFont(resourceMap.getFont("jPanel_GenerateReport.font")); // NOI18N
+        jPanel_GenerateReport.setMinimumSize(new java.awt.Dimension(107, 104));
+        jPanel_GenerateReport.setName("jPanel_GenerateReport"); // NOI18N
+
+        jButton_ReportsAllClients.setAction(actionMap.get("Reports_AllClients")); // NOI18N
+        jButton_ReportsAllClients.setText(resourceMap.getString("jButton_ReportsAllClients.text")); // NOI18N
+        jButton_ReportsAllClients.setName("jButton_ReportsAllClients"); // NOI18N
+
+        jButton_ReportsCurrentCleint.setAction(actionMap.get("ReportsCurrentClient")); // NOI18N
+        jButton_ReportsCurrentCleint.setText(resourceMap.getString("jButton_ReportsCurrentCleint.text")); // NOI18N
+        jButton_ReportsCurrentCleint.setName("jButton_ReportsCurrentCleint"); // NOI18N
+
+        javax.swing.GroupLayout jPanel_GenerateReportLayout = new javax.swing.GroupLayout(jPanel_GenerateReport);
+        jPanel_GenerateReport.setLayout(jPanel_GenerateReportLayout);
+        jPanel_GenerateReportLayout.setHorizontalGroup(
+            jPanel_GenerateReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_GenerateReportLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel_GenerateReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton_ReportsAllClients, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
+                    .addComponent(jButton_ReportsCurrentCleint, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel_GenerateReportLayout.setVerticalGroup(
+            jPanel_GenerateReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_GenerateReportLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton_ReportsAllClients)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton_ReportsCurrentCleint)
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
+
+        jPanel_LoadDetails.setBorder(javax.swing.BorderFactory.createTitledBorder(null, resourceMap.getString("jPanel_LoadDetails.border.title"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, resourceMap.getFont("jPanel_LoadDetails.border.titleFont"))); // NOI18N
+        jPanel_LoadDetails.setEnabled(false);
+        jPanel_LoadDetails.setName("jPanel_LoadDetails"); // NOI18N
+
+        jButton_MainWindow_LoadXmlDetails.setAction(actionMap.get("MainWindow_LoadXMLDetails")); // NOI18N
+        jButton_MainWindow_LoadXmlDetails.setText(resourceMap.getString("jButton_MainWindow_LoadXmlDetails.text")); // NOI18N
+        jButton_MainWindow_LoadXmlDetails.setToolTipText(resourceMap.getString("jButton_MainWindow_LoadXmlDetails.toolTipText")); // NOI18N
+        jButton_MainWindow_LoadXmlDetails.setName("jButton_MainWindow_LoadXmlDetails"); // NOI18N
+
+        jButton_MainailsWindow_LoadDBDetails.setAction(actionMap.get("MainWindow_LoadDBDetails")); // NOI18N
+        jButton_MainailsWindow_LoadDBDetails.setText(resourceMap.getString("jButton_MainailsWindow_LoadDBDetails.text")); // NOI18N
+        jButton_MainailsWindow_LoadDBDetails.setName("jButton_MainailsWindow_LoadDBDetails"); // NOI18N
+
+        javax.swing.GroupLayout jPanel_LoadDetailsLayout = new javax.swing.GroupLayout(jPanel_LoadDetails);
+        jPanel_LoadDetails.setLayout(jPanel_LoadDetailsLayout);
+        jPanel_LoadDetailsLayout.setHorizontalGroup(
+            jPanel_LoadDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_LoadDetailsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel_LoadDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jButton_MainailsWindow_LoadDBDetails, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton_MainWindow_LoadXmlDetails, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel_LoadDetailsLayout.setVerticalGroup(
+            jPanel_LoadDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_LoadDetailsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton_MainWindow_LoadXmlDetails)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton_MainailsWindow_LoadDBDetails)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout mainPanel_ClientCaseDetailsLayout = new javax.swing.GroupLayout(mainPanel_ClientCaseDetails);
+        mainPanel_ClientCaseDetails.setLayout(mainPanel_ClientCaseDetailsLayout);
+        mainPanel_ClientCaseDetailsLayout.setHorizontalGroup(
+            mainPanel_ClientCaseDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mainPanel_ClientCaseDetailsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(mainPanel_ClientCaseDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mainPanel_ClientCaseDetailsLayout.createSequentialGroup()
+                        .addComponent(jPanel_ClientrDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel_LoadDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel_ClientTaskDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(mainPanel_ClientCaseDetailsLayout.createSequentialGroup()
+                        .addComponent(jPanel_Client, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jPanel_Case, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel_Task, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel_GenerateReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                        .addComponent(jPanel_MainWindow, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        mainPanel_ClientCaseDetailsLayout.setVerticalGroup(
+            mainPanel_ClientCaseDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mainPanel_ClientCaseDetailsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(mainPanel_ClientCaseDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel_LoadDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel_ClientrDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(15, 15, 15)
+                .addComponent(jPanel_ClientTaskDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(mainPanel_ClientCaseDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel_MainWindow, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel_Case, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel_Client, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel_Task, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel_GenerateReport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(56, Short.MAX_VALUE))
+        );
+
+        jPanel_ClientTaskDetails.getAccessibleContext().setAccessibleName(resourceMap.getString("jPanel_ClientTaskDetails.AccessibleContext.accessibleName")); // NOI18N
+        jPanel_ClientTaskDetails.getAccessibleContext().setAccessibleDescription(resourceMap.getString("jPanel_ClientTaskDetails.AccessibleContext.accessibleDescription")); // NOI18N
+
+        menuBar.setName("menuBar"); // NOI18N
+
+        fileMenu.setText(resourceMap.getString("fileMenu.text")); // NOI18N
+        fileMenu.setName("fileMenu"); // NOI18N
+
+        exitMenuItem.setAction(actionMap.get("quit")); // NOI18N
+        exitMenuItem.setName("exitMenuItem"); // NOI18N
+        fileMenu.add(exitMenuItem);
+
+        menuBar.add(fileMenu);
+
+        helpMenu.setText(resourceMap.getString("helpMenu.text")); // NOI18N
+        helpMenu.setName("helpMenu"); // NOI18N
+
+        aboutMenuItem.setAction(actionMap.get("showAboutBox")); // NOI18N
+        aboutMenuItem.setName("aboutMenuItem"); // NOI18N
+        helpMenu.add(aboutMenuItem);
+
+        menuBar.add(helpMenu);
+
+        statusPanel.setName("statusPanel"); // NOI18N
+
+        statusPanelSeparator.setName("statusPanelSeparator"); // NOI18N
+
+        statusMessageLabel.setName("statusMessageLabel"); // NOI18N
+
+        statusAnimationLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        statusAnimationLabel.setName("statusAnimationLabel"); // NOI18N
+
+        progressBar.setName("progressBar"); // NOI18N
+
+        javax.swing.GroupLayout statusPanelLayout = new javax.swing.GroupLayout(statusPanel);
+        statusPanel.setLayout(statusPanelLayout);
+        statusPanelLayout.setHorizontalGroup(
+            statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(statusPanelSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE)
+            .addGroup(statusPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(statusMessageLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 492, Short.MAX_VALUE)
+                .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(statusAnimationLabel)
+                .addContainerGap())
+        );
+        statusPanelLayout.setVerticalGroup(
+            statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(statusPanelLayout.createSequentialGroup()
+                .addComponent(statusPanelSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(statusMessageLabel)
+                    .addComponent(statusAnimationLabel)
+                    .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(3, 3, 3))
+        );
+
+        jDialog_AddClient.setTitle(resourceMap.getString("jDialog_AddClient.title")); // NOI18N
+        jDialog_AddClient.setLocationByPlatform(true);
+        jDialog_AddClient.setMinimumSize(new java.awt.Dimension(180, 200));
+        jDialog_AddClient.setModal(true);
+        jDialog_AddClient.setName("jDialog_AddClient"); // NOI18N
+        jDialog_AddClient.setResizable(false);
+        jDialog_AddClient.setType(java.awt.Window.Type.POPUP);
+
+        jTextField_AddNewClient_ID.setEnabled(false);
+        jTextField_AddNewClient_ID.setFocusable(false);
+        jTextField_AddNewClient_ID.setName("jTextField_AddNewClient_ID"); // NOI18N
+
+        jTextField_AddNewClient_Name.setText(resourceMap.getString("jTextField_AddNewClient_Name.text")); // NOI18N
+        jTextField_AddNewClient_Name.setToolTipText(resourceMap.getString("jTextField_AddNewClient_Name.toolTipText")); // NOI18N
+        jTextField_AddNewClient_Name.setName("jTextField_AddNewClient_Name"); // NOI18N
+
+        jLabel_AddNewClient_ID.setText(resourceMap.getString("jLabel_AddNewClient_ID.text")); // NOI18N
+        jLabel_AddNewClient_ID.setName("jLabel_AddNewClient_ID"); // NOI18N
+
+        jLabel_AddNewClient_Name.setText(resourceMap.getString("jLabel_AddNewClient_Name.text")); // NOI18N
+        jLabel_AddNewClient_Name.setName("jLabel_AddNewClient_Name"); // NOI18N
+
+        jLabel_AddNewCLient_Phone.setText(resourceMap.getString("jLabel_AddNewCLient_Phone.text")); // NOI18N
+        jLabel_AddNewCLient_Phone.setName("jLabel_AddNewCLient_Phone"); // NOI18N
+
+        jButton_AddNewClient_OK.setAction(actionMap.get("AddNewClient_OK")); // NOI18N
+        jButton_AddNewClient_OK.setText(resourceMap.getString("jButton_AddNewClient_OK.text")); // NOI18N
+        jButton_AddNewClient_OK.setToolTipText(resourceMap.getString("jButton_AddNewClient_OK.toolTipText")); // NOI18N
+        jButton_AddNewClient_OK.setName("jButton_AddNewClient_OK"); // NOI18N
+
+        jButton_AddNewClient_Cancel.setAction(actionMap.get("AddNewClient_Cancel")); // NOI18N
+        jButton_AddNewClient_Cancel.setText(resourceMap.getString("jButton_AddNewClient_Cancel.text")); // NOI18N
+        jButton_AddNewClient_Cancel.setName("jButton_AddNewClient_Cancel"); // NOI18N
+
+        jTextField_AddNewClient_Phone.setText(resourceMap.getString("jTextField_AddNewClient_Phone.text")); // NOI18N
+        jTextField_AddNewClient_Phone.setName("jTextField_AddNewClient_Phone"); // NOI18N
+
+        javax.swing.GroupLayout jDialog_AddClientLayout = new javax.swing.GroupLayout(jDialog_AddClient.getContentPane());
+        jDialog_AddClient.getContentPane().setLayout(jDialog_AddClientLayout);
+        jDialog_AddClientLayout.setHorizontalGroup(
+            jDialog_AddClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog_AddClientLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jDialog_AddClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jDialog_AddClientLayout.createSequentialGroup()
+                        .addComponent(jLabel_AddNewClient_ID, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField_AddNewClient_ID, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
+                        .addGap(22, 22, 22))
+                    .addGroup(jDialog_AddClientLayout.createSequentialGroup()
+                        .addComponent(jLabel_AddNewClient_Name)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField_AddNewClient_Name, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
+                        .addGap(22, 22, 22))
+                    .addGroup(jDialog_AddClientLayout.createSequentialGroup()
+                        .addComponent(jLabel_AddNewCLient_Phone)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField_AddNewClient_Phone, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
+                        .addGap(22, 22, 22))
+                    .addGroup(jDialog_AddClientLayout.createSequentialGroup()
+                        .addComponent(jButton_AddNewClient_OK, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton_AddNewClient_Cancel)
+                        .addContainerGap(20, Short.MAX_VALUE))))
+        );
+
+        jDialog_AddClientLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton_AddNewClient_Cancel, jButton_AddNewClient_OK, jLabel_AddNewCLient_Phone, jLabel_AddNewClient_ID, jLabel_AddNewClient_Name, jTextField_AddNewClient_ID, jTextField_AddNewClient_Name, jTextField_AddNewClient_Phone});
+
+        jDialog_AddClientLayout.setVerticalGroup(
+            jDialog_AddClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog_AddClientLayout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(jDialog_AddClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel_AddNewClient_ID)
+                    .addComponent(jTextField_AddNewClient_ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jDialog_AddClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel_AddNewClient_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField_AddNewClient_Name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jDialog_AddClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel_AddNewCLient_Phone)
+                    .addComponent(jTextField_AddNewClient_Phone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(jDialog_AddClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton_AddNewClient_OK)
+                    .addComponent(jButton_AddNewClient_Cancel))
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
+
+        jLabel_AddNewClient_ID.getAccessibleContext().setAccessibleName(resourceMap.getString("jLabel_AddClientID.AccessibleContext.accessibleName")); // NOI18N
+
+        jDialog_AddNewCase.setTitle(resourceMap.getString("jDialog_AddNewCase.title")); // NOI18N
+        jDialog_AddNewCase.setAlwaysOnTop(true);
+        jDialog_AddNewCase.setLocationByPlatform(true);
+        jDialog_AddNewCase.setMinimumSize(new java.awt.Dimension(600, 150));
+        jDialog_AddNewCase.setModal(true);
+        jDialog_AddNewCase.setName("jDialog_AddNewCase"); // NOI18N
+        jDialog_AddNewCase.setResizable(false);
+
+        jTextField_AddNewCase_ID.setText(resourceMap.getString("jTextField_AddNewCase_ID.text")); // NOI18N
+        jTextField_AddNewCase_ID.setName("jTextField_AddNewCase_ID"); // NOI18N
+
+        jLabel_AddNewCase.setFont(resourceMap.getFont("jLabel_AddNewCase.font")); // NOI18N
+        jLabel_AddNewCase.setText(resourceMap.getString("jLabel_AddNewCase.text")); // NOI18N
+        jLabel_AddNewCase.setName("jLabel_AddNewCase"); // NOI18N
+
+        jButton_AddNewCase_OK.setAction(actionMap.get("AddNewCase_OK")); // NOI18N
+        jButton_AddNewCase_OK.setText(resourceMap.getString("jButton_AddNewCase_OK.text")); // NOI18N
+        jButton_AddNewCase_OK.setToolTipText(resourceMap.getString("jButton_AddNewCase_OK.toolTipText")); // NOI18N
+        jButton_AddNewCase_OK.setName("jButton_AddNewCase_OK"); // NOI18N
+
+        jButton_AddNewCase_Cancel.setAction(actionMap.get("AddNewCase_Cancel")); // NOI18N
+        jButton_AddNewCase_Cancel.setText(resourceMap.getString("jButton_AddNewCase_Cancel.text")); // NOI18N
+        jButton_AddNewCase_Cancel.setToolTipText(resourceMap.getString("jButton_AddNewCase_Cancel.toolTipText")); // NOI18N
+        jButton_AddNewCase_Cancel.setName("jButton_AddNewCase_Cancel"); // NOI18N
+
+        javax.swing.GroupLayout jDialog_AddNewCaseLayout = new javax.swing.GroupLayout(jDialog_AddNewCase.getContentPane());
+        jDialog_AddNewCase.getContentPane().setLayout(jDialog_AddNewCaseLayout);
+        jDialog_AddNewCaseLayout.setHorizontalGroup(
+            jDialog_AddNewCaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog_AddNewCaseLayout.createSequentialGroup()
+                .addGroup(jDialog_AddNewCaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jDialog_AddNewCaseLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButton_AddNewCase_OK, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton_AddNewCase_Cancel))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jDialog_AddNewCaseLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel_AddNewCase)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextField_AddNewCase_ID, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        jDialog_AddNewCaseLayout.setVerticalGroup(
+            jDialog_AddNewCaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog_AddNewCaseLayout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addGroup(jDialog_AddNewCaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField_AddNewCase_ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel_AddNewCase))
+                .addGap(18, 18, 18)
+                .addGroup(jDialog_AddNewCaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton_AddNewCase_Cancel)
+                    .addComponent(jButton_AddNewCase_OK))
+                .addContainerGap())
+        );
+
+        jDialog_AddNewTask.setTitle(resourceMap.getString("jDialog_AddNewTask.title")); // NOI18N
+        jDialog_AddNewTask.setLocationByPlatform(true);
+        jDialog_AddNewTask.setMinimumSize(new java.awt.Dimension(600, 140));
+        jDialog_AddNewTask.setModal(true);
+        jDialog_AddNewTask.setName("jDialog_AddNewTask"); // NOI18N
+        jDialog_AddNewTask.setResizable(false);
+
+        jLabel_AddNewTask_Task.setFont(resourceMap.getFont("jLabel_AddNewTask_Task.font")); // NOI18N
+        jLabel_AddNewTask_Task.setText(resourceMap.getString("jLabel_AddNewTask_Task.text")); // NOI18N
+        jLabel_AddNewTask_Task.setName("jLabel_AddNewTask_Task"); // NOI18N
+
+        jTextField_AddNewTask_Task.setText(resourceMap.getString("jTextField_AddNewTask_Task.text")); // NOI18N
+        jTextField_AddNewTask_Task.setToolTipText(resourceMap.getString("jTextField_AddNewTask_Task.toolTipText")); // NOI18N
+        jTextField_AddNewTask_Task.setName("jTextField_AddNewTask_Task"); // NOI18N
+
+        jButton_AddNewTask_OK.setAction(actionMap.get("AddNewTask_OK")); // NOI18N
+        jButton_AddNewTask_OK.setText(resourceMap.getString("jButton_AddNewTask_OK.text")); // NOI18N
+        jButton_AddNewTask_OK.setToolTipText(resourceMap.getString("jButton_AddNewTask_OK.toolTipText")); // NOI18N
+        jButton_AddNewTask_OK.setName("jButton_AddNewTask_OK"); // NOI18N
+
+        jButtonAddNewTask_Cancel.setAction(actionMap.get("AddNewTask_Cancel")); // NOI18N
+        jButtonAddNewTask_Cancel.setText(resourceMap.getString("jButtonAddNewTask_Cancel.text")); // NOI18N
+        jButtonAddNewTask_Cancel.setToolTipText(resourceMap.getString("jButtonAddNewTask_Cancel.toolTipText")); // NOI18N
+        jButtonAddNewTask_Cancel.setName("jButtonAddNewTask_Cancel"); // NOI18N
+
+        jLabel_AddNewTask_Duration.setFont(resourceMap.getFont("jLabel_AddNewTask_Duration.font")); // NOI18N
+        jLabel_AddNewTask_Duration.setText(resourceMap.getString("jLabel_AddNewTask_Duration.text")); // NOI18N
+        jLabel_AddNewTask_Duration.setName("jLabel_AddNewTask_Duration"); // NOI18N
+
+        jComboBox_AddNewTask_Duration.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "5", "5.5", "6", "6.5", "7", "7.5", "8", "8.5", "9", "9.5", "10", "10.5", "11", "11.5", "12", "12.5", "13", "13.5", "14", "14.5", "15", "15.5", "16", "16.5", "17", "17.5", "18", "18.5", "19", "19.5", "20", "20.5", "21", "21.5", "22", "22.5", "23", "23.5", "24" }));
+        jComboBox_AddNewTask_Duration.setName("jComboBox_AddNewTask_Duration"); // NOI18N
+
+        jLabel_AddNewTask_Date.setFont(resourceMap.getFont("jLabel_AddNewTask_Date.font")); // NOI18N
+        jLabel_AddNewTask_Date.setText(resourceMap.getString("jLabel_AddNewTask_Date.text")); // NOI18N
+        jLabel_AddNewTask_Date.setToolTipText(resourceMap.getString("jLabel_AddNewTask_Date.toolTipText")); // NOI18N
+        jLabel_AddNewTask_Date.setName("jLabel_AddNewTask_Date"); // NOI18N
+
+        jTextField_AddNewTask_Date.setText(resourceMap.getString("jTextField_AddNewTask_Date.text")); // NOI18N
+        jTextField_AddNewTask_Date.setToolTipText(resourceMap.getString("jTextField_AddNewTask_Date.toolTipText")); // NOI18N
+        jTextField_AddNewTask_Date.setName("jTextField_AddNewTask_Date"); // NOI18N
+
+        javax.swing.GroupLayout jDialog_AddNewTaskLayout = new javax.swing.GroupLayout(jDialog_AddNewTask.getContentPane());
+        jDialog_AddNewTask.getContentPane().setLayout(jDialog_AddNewTaskLayout);
+        jDialog_AddNewTaskLayout.setHorizontalGroup(
+            jDialog_AddNewTaskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog_AddNewTaskLayout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(jDialog_AddNewTaskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel_AddNewTask_Task)
+                    .addComponent(jLabel_AddNewTask_Duration))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jDialog_AddNewTaskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jDialog_AddNewTaskLayout.createSequentialGroup()
+                        .addComponent(jComboBox_AddNewTask_Duration, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel_AddNewTask_Date)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextField_AddNewTask_Date, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
+                        .addComponent(jButton_AddNewTask_OK)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonAddNewTask_Cancel))
+                    .addComponent(jTextField_AddNewTask_Task, javax.swing.GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jDialog_AddNewTaskLayout.setVerticalGroup(
+            jDialog_AddNewTaskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog_AddNewTaskLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(jDialog_AddNewTaskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField_AddNewTask_Task, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel_AddNewTask_Task))
+                .addGap(26, 26, 26)
+                .addGroup(jDialog_AddNewTaskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonAddNewTask_Cancel)
+                    .addComponent(jButton_AddNewTask_OK)
+                    .addComponent(jLabel_AddNewTask_Date)
+                    .addComponent(jTextField_AddNewTask_Date, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox_AddNewTask_Duration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel_AddNewTask_Duration))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jDialog_MessageBox.setTitle(resourceMap.getString("jDialog_MessageBox.title")); // NOI18N
+        jDialog_MessageBox.setLocationByPlatform(true);
+        jDialog_MessageBox.setMinimumSize(new java.awt.Dimension(400, 300));
+        jDialog_MessageBox.setModal(true);
+        jDialog_MessageBox.setName("jDialog_MessageBox"); // NOI18N
+        jDialog_MessageBox.setResizable(false);
+
+        jScrollPane1.setName("jScrollPane1"); // NOI18N
+
+        jTextArea_ClientDetailsMessage.setColumns(20);
+        jTextArea_ClientDetailsMessage.setFont(resourceMap.getFont("jTextArea_ClientDetailsMessage.font")); // NOI18N
+        jTextArea_ClientDetailsMessage.setRows(5);
+        jTextArea_ClientDetailsMessage.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jTextArea_ClientDetailsMessage.setEnabled(false);
+        jTextArea_ClientDetailsMessage.setFocusable(false);
+        jTextArea_ClientDetailsMessage.setName("jTextArea_ClientDetailsMessage"); // NOI18N
+        jScrollPane1.setViewportView(jTextArea_ClientDetailsMessage);
+
+        jButton_ClientDetailsMessage_OK.setAction(actionMap.get("ClientDetailsMessage_OK")); // NOI18N
+        jButton_ClientDetailsMessage_OK.setText(resourceMap.getString("jButton_ClientDetailsMessage_OK.text")); // NOI18N
+        jButton_ClientDetailsMessage_OK.setName("jButton_ClientDetailsMessage_OK"); // NOI18N
+
+        javax.swing.GroupLayout jDialog_MessageBoxLayout = new javax.swing.GroupLayout(jDialog_MessageBox.getContentPane());
+        jDialog_MessageBox.getContentPane().setLayout(jDialog_MessageBoxLayout);
+        jDialog_MessageBoxLayout.setHorizontalGroup(
+            jDialog_MessageBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog_MessageBoxLayout.createSequentialGroup()
+                .addGroup(jDialog_MessageBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jDialog_MessageBoxLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE))
+                    .addGroup(jDialog_MessageBoxLayout.createSequentialGroup()
+                        .addGap(147, 147, 147)
+                        .addComponent(jButton_ClientDetailsMessage_OK, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jDialog_MessageBoxLayout.setVerticalGroup(
+            jDialog_MessageBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialog_MessageBoxLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+                .addGap(11, 11, 11)
+                .addComponent(jButton_ClientDetailsMessage_OK)
+                .addContainerGap())
+        );
+
+        setComponent(mainPanel_ClientCaseDetails);
+    }// </editor-fold>//GEN-END:initComponents
+
+private void jComboBox_ClientTasksItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox_ClientTasksItemStateChanged
+// TODO add your handling code here:
+    int state = evt.getStateChange();
+    if (state == java.awt.event.ItemEvent.SELECTED)
+    {
+        //System.out.printf("TASK Combo: count: %d , evt = %s\n", intMessageCount, evt.toString());
+        String strClientID = jComboBox_ClientID.getSelectedItem().toString();
+        String strCaseID = jComboBox_ClientCases.getSelectedItem().toString();
+        if(strClientID != null && strCaseID != null)
+        {
+            int intSelectedTaskIndex = jComboBox_ClientTasks.getSelectedIndex();
+            Task objTaskRecord = objClientRecords.getClientRecord(strClientID,0).getClientCaseRecord(strCaseID,0).getClientTaskRecord(intSelectedTaskIndex);
+            jTextField_TaskDuration.setText(objTaskRecord.getTaskDuration());
+            jTextField_TaskDate.setText(objTaskRecord.getTaskDate());
+         }
+    }else{
+        //System.out.printf("CASES Combo: do not handle, count: %d\n",intMessageCount);
+   }
+}//GEN-LAST:event_jComboBox_ClientTasksItemStateChanged
+//------------------------------------------------------------------------------    
+
+private void jComboBox_ClientIDItemStateChanged(java.awt.event.ItemEvent evt) {                                                    
+// TODO add your handling code here:
+    //intMessageCount++;
+    int state = evt.getStateChange();
+    if (state == java.awt.event.ItemEvent.SELECTED)
+    {   
+        //System.out.printf("CLIENTID Combo: count: %d , evt = %s\n",intMessageCount, evt.toString());
+        String strID = jComboBox_ClientID.getSelectedItem().toString();
+        if(strID != null)
+        {
+            ClientRecord objClientRecord = objClientRecords.getClientRecord(strID,0);
+            this.jTextField_ClientName.setText(objClientRecord.getClientName());
+            this.jTextField_ClientPhone.setText(objClientRecord.getClientPhone());
+            LoadClientCaseDetailsIntoTheGUI(strID);
+        }
+    }else{
+        //System.out.printf("CLIENTID Combo: do not handle, count: %d\n",intMessageCount);
+    }
+}                                                   
+
+//------------------------------------------------------------------------------    
+private void jComboBox_ClientCasesItemStateChanged(java.awt.event.ItemEvent evt) {                                                       
+// TODO add your handling code here:
+    //intMessageCount++;
+    int state = evt.getStateChange();
+    if (state == java.awt.event.ItemEvent.SELECTED)
+    {
+        //System.out.printf("CASES Combo: count: %d , evt = %s\n", intMessageCount, evt.toString());
+        String strClientID = jComboBox_ClientID.getSelectedItem().toString();
+        String strCaseID = jComboBox_ClientCases.getSelectedItem().toString();
+        if(strClientID != null && strCaseID != null)
+        {
+            LoadClientCaseTaskDetailsIntoTheGUI(strClientID,strCaseID,0);
+            boolean booOpen = this.objClientRecords.getClientRecord(strClientID, 0).getClientCaseRecord(strCaseID, 0).getClientCaseRecordOpen();
+            SetCaseOpenCloseRadioButtons(booOpen);
+        }
+    }else{
+        //System.out.printf("CASES Combo: do not handle, count: %d\n",intMessageCount);
+    }
+ 
+}                                                      
+//------------------------------------------------------------------------------    
+    private void  resetAllClientDetailDisplayObjects()
+    {
+        this.jComboBox_ClientID.removeAllItems();
+        this.jComboBox_ClientTasks.removeAllItems();
+        this.jComboBox_ClientCases.removeAllItems();
+        
+        //this.jComboBox_AddNewTask_Duration.removeAllItems();
+        
+        this.jTextField_TaskDuration.setText("");
+        this.jTextField_AddNewCase_ID.setText("");
+        this.jTextField_AddNewClient_ID.setText("");
+        this.jTextField_AddNewClient_Name.setText("");
+        this.jTextField_AddNewClient_Phone.setText("");
+        this.jTextField_AddNewTask_Date.setText("");
+        this.jTextField_AddNewTask_Task.setText("");
+        this.jTextField_ClientName.setText("");
+        this.jTextField_ClientPhone.setText("");
+        this.jTextField_TaskDate.setText("");
+        this.jTextField_TotalBillableHours.setText("");       
+    }
+//------------------------------------------------------------------------------    
+    private void LoadDBData()
+    {
+        try {
+            Connection DBconnect;  
+
+            DBconnect = DriverManager.getConnection(
+                "jdbc:mysql://localhost/solicitorrecords",
+                "root",
+                "");
+
+            if (DBconnect != null)
+            {
+                resetAllClientDetailDisplayObjects();
+                objClientRecords.reset();
+                
+                int intClientCount = 0;
+                Statement sClientRecords = DBconnect.createStatement();
+
+                sClientRecords.executeQuery ("SELECT * FROM solicitorrecords.clientrecords");
+                ResultSet rsClientRecords = sClientRecords.getResultSet ();
+
+                while (rsClientRecords.next ())
+                {
+                    intClientCount++;
+                    String strClientID = rsClientRecords.getString ("idClientRecords");
+                    String strClientName = rsClientRecords.getString ("ClientName");
+                    String strClientPhone = rsClientRecords.getString ("ClientPhone");
+
+                    Statement sClientCaseRecords = DBconnect.createStatement();
+                    sClientCaseRecords.executeQuery ("SELECT * FROM solicitorrecords.clientcaserecords WHERE ClientRecords_idClientRecords = " + strClientID);
+
+                    objClientRecords.addClientRecord(strClientID,strClientName,strClientPhone,intClientCount);
+
+                    ResultSet rsClientCaseRecords = sClientCaseRecords.getResultSet ();
+
+                    while (rsClientCaseRecords.next ())
+                    {
+                        String strCaseID = rsClientCaseRecords.getString ("CaseID");
+                        String strTextCaseID = rsClientCaseRecords.getString ("idClientCaseRecords");
+                        String strCaseState = rsClientCaseRecords.getString ("ClientCaseState");
+
+                        objClientRecords.getClientRecord(strClientID, 0).addClientCaseRecord(strTextCaseID, strCaseState);
+
+                        Statement sTaskRecords = DBconnect.createStatement();
+                        sTaskRecords.executeQuery ("SELECT * FROM solicitorrecords.tasks WHERE ClientCaseRecords_CaseID = " + strCaseID);
+
+                        ResultSet rsTaskRecords = sTaskRecords.getResultSet ();
+
+                        while (rsTaskRecords.next ())
+                        {
+                            String strTaskID = rsTaskRecords.getString ("idTasks");
+                            String strDate = rsTaskRecords.getString ("TaskDate");
+                            String strDuration = rsTaskRecords.getString ("TaskDuration");
+                            String strDescription = rsTaskRecords.getString ("TaskDescription");
+
+                            objClientRecords
+                                    .getClientRecord(strClientID, 0)
+                                    .getClientCaseRecord(strTextCaseID, 0)
+                                    .addTask(strTaskID, strDate, strDuration, strDescription, (strClientID + " : " + strCaseID));
+                        }               
+                        rsTaskRecords.close ();
+                        sTaskRecords.close ();
+                    }               
+                    rsClientCaseRecords.close ();
+                    sClientCaseRecords.close ();
+                }
+                rsClientRecords.close ();
+                sClientRecords.close ();
+                DBconnect.close();
+            }
+         }
+         catch (SQLException e) {
+             e.printStackTrace();
+             System.err.println("Connection Failure");
+         }  
+        LoadClientDetailsIntoTheGUI(0);
+    }
+//------------------------------------------------------------------------------    
+    private void LoadXmlData()
+    {
+        try{
+
+            resetAllClientDetailDisplayObjects();
+            File objFile = GetFileFromDLG(true, ".xml");
+            if(objFile == null)
+            {
+                return;
+            }
+            //get the factory
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            Document dom;
+            NodeList nodelistClientRecords;
+
+            objClientRecords.reset();
+            
+            //Using factory get an instance of document builder
+            DocumentBuilder db = dbf.newDocumentBuilder();
+
+            //parse using builder to get DOM representation of the XML file
+            dom = db.parse(objFile);
+          
+            Node nodeFirstChild = dom.getFirstChild();
+
+            NodeList nodelistClients = nodeFirstChild.getChildNodes();
+            int intClientsNodeListLen = nodeFirstChild.getChildNodes().getLength();
+            int intClientCounter = 0;
+            for(int intCount = 0; intCount < intClientsNodeListLen; intCount++)
+            {
+                Node nodeClient = nodelistClients.item(intCount);
+
+                if(nodeClient != null)
+                {
+                    String strNodeName = nodeClient.getNodeName();
+                    //If we have a Client node start getting the data
+                    if(strNodeName.equals("Client"))
+                    {
+                        NodeList nodeListClients = nodeClient.getChildNodes();
+
+                        //Get Client details
+                        String strClientID = nodeListClients.item(0).getTextContent();
+                        strClientID.trim();
+                        String strClientName = nodeListClients.item(1).getTextContent();
+                        strClientName.trim();
+                        String strClientPhone = nodeListClients.item(2).getTextContent();
+                        strClientPhone.trim();
+
+                        objClientRecords.addClientRecord(strClientID,strClientName,strClientPhone,intClientCounter);
+                        intClientCounter++;    
+
+                        //objClientRecords.
+                        NodeList nodeListCases =  nodeListClients.item(3).getChildNodes();
+                        if(nodeListCases != null)
+                        {
+                            int intLenCases = nodeListCases.getLength();
+                            for(int intCounterB = 0;intCounterB < intLenCases; intCounterB++)
+                            {
+                                String strNodeNameB = nodeListClients.item(3).getNodeName();
+                                strNodeNameB.trim();
+                                //If we have a Cases node start getting the data
+                                if(strNodeNameB.equals("Cases"))
+                                {
+                                    String strNodeNameC = nodeListCases.item(intCounterB).getNodeName();
+                                    strNodeNameC.trim();
+                                    if(strNodeNameC.equals("Case"))
+                                    {
+                                        Node nodeCaseID = null;
+                                        nodeCaseID = nodeListCases.item(intCounterB).getFirstChild();
+                                        String strCaseID = null;
+                                        strCaseID = nodeListCases.item(intCounterB).getFirstChild().getTextContent();
+
+                                        Node nodeCaseState = null;
+                                        nodeCaseState = nodeCaseID.getNextSibling();
+                                        String strCaseState = null;
+                                        strCaseState = nodeCaseID.getNextSibling().getTextContent();
+
+                                        objClientRecords.getClientRecord(strClientID, 0).addClientCaseRecord(strCaseID, strCaseState);
+
+                                        NodeList nodeListTaskDetails = null;
+                                        nodeListTaskDetails = nodeListCases.item(intCounterB).getChildNodes().item(2).getChildNodes();
+
+                                        int intLenTaskDetails = nodeListTaskDetails.getLength();
+
+                                        for(int intCounterE = 0;intCounterE < intLenTaskDetails;intCounterE++)
+                                        {
+                                            String strTaskID = nodeListTaskDetails.item(intCounterE).getChildNodes().item(0).getTextContent();
+                                            String strDate = nodeListTaskDetails.item(intCounterE).getChildNodes().item(1).getTextContent();
+                                            String strDuration = nodeListTaskDetails.item(intCounterE).getChildNodes().item(2).getTextContent();
+                                            String strDescription = nodeListTaskDetails.item(intCounterE).getChildNodes().item(3).getTextContent();
+
+                                            objClientRecords
+                                                    .getClientRecord(strClientID, 0)
+                                                    .getClientCaseRecord(strCaseID, 0)
+                                                    .addTask(strTaskID, strDate, strDuration, strDescription, (strClientID + " : " + strCaseID));
+                                         }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }catch (SAXParseException err) {
+            System.out.println ("** Parsing error" + ", line " 
+                 + err.getLineNumber () + ", uri " + err.getSystemId ());
+            System.out.println(" " + err.getMessage ());
+
+        }catch (SAXException e) {
+            Exception x = e.getException ();
+            ((x == null) ? e : x).printStackTrace ();
+
+        }catch (Throwable t) {
+            t.printStackTrace ();
+        }
+        LoadClientDetailsIntoTheGUI(0);
+    }    
+
+//------------------------------------------------------------------------------    
+    public void LoadClientDetailsIntoTheGUI(int intSetSelection)
+    {
+        //Load the Client Details
+        int intClientLen = objClientRecords.getClientRecordLength();
+        int intCounter;
+        
+        for(intCounter = 0; intCounter < intClientLen; intCounter++)
+        {
+            ClientRecord objClientRecord = objClientRecords.getClientRecord(intCounter);
+            jComboBox_ClientID.insertItemAt(objClientRecord.getClientID(), intCounter);
+        }
+        if(jComboBox_ClientID.getItemCount() > 0)
+        {
+            jComboBox_ClientID.setSelectedIndex(intSetSelection);
+        }
+    }
+//------------------------------------------------------------------------------    
+    public void SetCaseOpenCloseRadioButtons(boolean booOpen)
+    {
+        buttonGroup1.clearSelection();
+        if(booOpen)
+        {
+              //Do nothing because the open button is already set
+            this.jRadioButton_CaseOpen.doClick();
+        }
+        else
+        {
+            this.jRadioButton_CaseClose.doClick();
+        }
+
+    }
+//------------------------------------------------------------------------------    
+    public void LoadClientCaseDetailsIntoTheGUI(String strID)
+    {
+        jComboBox_ClientCases.removeAllItems();
+        //Load the Client Case Details
+        ClientCaseRecord objCaseDetails = null;
+        int intCaseLen = objClientRecords.getClientRecord(strID,0).getClientCaseRecordLength();
+        for(int intCounter = 0; intCounter < intCaseLen; intCounter++)
+        {
+            
+            objCaseDetails = objClientRecords.getClientRecord(strID,0).getClientCaseRecord(intCounter);
+            jComboBox_ClientCases.insertItemAt(objCaseDetails.getClientCaseRecordID() , intCounter);
+        }
+        if(jComboBox_ClientCases.getItemCount() > 0)
+        {
+            if(objCaseDetails != null)
+            {
+                boolean booOpen = objCaseDetails.getClientCaseRecordOpen();
+                SetCaseOpenCloseRadioButtons(booOpen);
+            }
+            jComboBox_ClientCases.setSelectedIndex(0);
+        }else{
+            EmptyTaskDetails();
+        }
+    }
+//------------------------------------------------------------------------------    
+    public void LoadClientCaseDetailsIntoTheGUI()
+    {
+        String strID = jComboBox_ClientID.getSelectedItem().toString();
+        LoadClientCaseDetailsIntoTheGUI(strID);
+    }
+//------------------------------------------------------------------------------    
+    public void EmptyTaskDetails()
+    {
+        this.jComboBox_ClientTasks.removeAllItems();           
+        jTextField_TaskDuration.setText("");
+        jTextField_TaskDate.setText("");
+    }
+//------------------------------------------------------------------------------    
+    public void LoadClientCaseTaskDetailsIntoTheGUI(String strID, String strCaseID, int intIndex)
+    {
+        //System.out.printf("LOAD Task's\n\n");
+        jComboBox_ClientTasks.removeAllItems();
+        //Third: load the Client Case Task Details
+        int intTaskLen = objClientRecords.getClientRecord(strID,0).getClientCaseRecord(strCaseID,0).getClientTaskLength();
+        Task objTaskRecord;
+        double dblTotalCaseDuration = 0;
+        for(int intCounter = 0; intCounter < intTaskLen; intCounter++)
+        {
+            objTaskRecord = objClientRecords.getClientRecord(strID,0).getClientCaseRecord(strCaseID,0).getClientTaskRecord(intCounter);
+            jComboBox_ClientTasks.insertItemAt(objTaskRecord.getTaskDescription() , intCounter);
+            if(intCounter == intTaskLen-1)
+            {
+                jTextField_TaskDuration.setText(objTaskRecord.getTaskDuration());
+                jTextField_TaskDate.setText(objTaskRecord.getTaskDate());
+            }
+            String strTotalDuration = objTaskRecord.getTaskDuration();
+            
+            dblTotalCaseDuration += Double.parseDouble(strTotalDuration);
+        }
+        this.jTextField_TotalBillableHours.setText(Double.toString(dblTotalCaseDuration));
+        if(jComboBox_ClientTasks.getItemCount() > 0)
+        {
+            jComboBox_ClientTasks.setSelectedIndex(intIndex);
+        }              
+    }    
+//------------------------------------------------------------------------------    
+    public void LoadClientCaseTaskDetailsIntoTheGUI()
+    {
+        String strID = jComboBox_ClientID.getSelectedItem().toString();
+        String strCaseID = jComboBox_ClientCases.getSelectedItem().toString();
+        LoadClientCaseTaskDetailsIntoTheGUI(strID, strCaseID, 0);
+    }
+//------------------------------------------------------------------------------    
+
+    public void SaveClientDetailsToXMLFile(File objFile) throws Exception{
+         //get the factory
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        //Using factory get an instance of document builder
+        DocumentBuilder db = dbf.newDocumentBuilder();
+            
+        Document document = db.newDocument();
+
+        document.setXmlStandalone(true);
+        //document.setDocumentURI(null);
+        Element ClientRecords = document.createElement("ClientRecords"); 
+
+        document.appendChild(ClientRecords);                    
+        
+        int intClientCount = this.objClientRecords.getClientRecordLength();
+        
+        for(int intClientCounter = 0; intClientCounter < intClientCount; intClientCounter++)
+        {                  
+            ClientRecord objCliRec = objClientRecords.getClientRecord(intClientCounter); 
+            
+            Element Client = document.createElement("Client");
+            
+            Element ID = document.createElement("ID");
+            ID.appendChild(document.createTextNode(objCliRec.getClientID()));
+
+            Element Name = document.createElement("Name");
+            Name.appendChild(document.createTextNode(objCliRec.getClientName()));
+
+            Element Phone = document.createElement("Phone");
+            Phone.appendChild(document.createTextNode(objCliRec.getClientPhone()));
+            
+            Client.appendChild(ID);
+            Client.appendChild(Name);
+            Client.appendChild(Phone);
+            
+            int intCaseCount = objCliRec.getClientCaseRecordLength();
+
+            if(intCaseCount > 0)
+            {
+                Element Cases, Case, CaseID, CaseState =  null;
+                Cases = document.createElement("Cases");
+                for(int intCaseCounter = 0; intCaseCounter < intCaseCount; intCaseCounter++)
+                {            
+                    ClientCaseRecord objCliCaseRec = objCliRec.getClientCaseRecord(intCaseCounter);
+                    
+                    Case = document.createElement("Case");
+                    
+                    CaseID = document.createElement("CaseID");
+                    CaseID.appendChild(document.createTextNode(objCliCaseRec.getClientCaseRecordID()));
+                    
+                    CaseState = document.createElement("CaseState");
+                    CaseState.appendChild(document.createTextNode(objCliCaseRec.getClientCaseState()));
+                    
+                    Case.appendChild(CaseID);
+                    Case.appendChild(CaseState);
+                    
+                    int intTaskCount = objCliCaseRec.getClientTaskLength();
+                    if(intTaskCount > 0)
+                    {
+                        Element Tasks, Task, TaskID, Date, Duration, Description = null;
+
+                        Tasks = document.createElement("Tasks");
+                        for(int intTaskCounter = 0; intTaskCounter < intTaskCount; intTaskCounter++)
+                        {            
+                            Task objTask = objCliCaseRec.getClientTaskRecord(intTaskCounter);
+                            
+                            Task = document.createElement("Task");
+                    
+                            TaskID = document.createElement("TaskID");
+                            TaskID.appendChild(document.createTextNode(objTask.getTaskID()));
+                            
+                            Date = document.createElement("Date");
+                            Date.appendChild(document.createTextNode(objTask.getTaskDate()));
+                            
+                            Duration = document.createElement("Duration");
+                            Duration.appendChild(document.createTextNode(objTask.getTaskDuration()));
+                            
+                            Description = document.createElement("Description");
+                            Description.appendChild(document.createTextNode(objTask.getTaskDescription()));
+
+                            Task.appendChild(TaskID);
+                            Task.appendChild(Date);
+                            Task.appendChild(Duration);
+                            Task.appendChild(Description);
+                            
+                            Tasks.appendChild(Task);
+                        }
+                        Case.appendChild(Tasks);
+                    }
+                    Cases.appendChild(Case);
+                }
+                Client.appendChild(Cases);
+            }
+            ClientRecords.appendChild(Client);
+        }
+
+        TransformerFactory tf = TransformerFactory.newInstance();
+        
+        Transformer transformer = tf.newTransformer();
+
+        DOMSource source = new DOMSource(document);         
+        
+        //StreamResult result = new StreamResult(System.out);  
+        
+        //StreamResult sr = new StreamResult(new File("ClientDetails.xml"));
+        StreamResult sr = new StreamResult(objFile);
+
+        //transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        
+        transformer.transform(source, sr);
+    }
+//------------------------------------------------------------------------------    
+    public void GenerateClientCaseReport(File objFile, boolean booAllClients){
+
+        try{
+            FileWriter fstream = new FileWriter(objFile);
+            BufferedWriter out = new BufferedWriter(fstream);
+
+            int intClientCount = this.objClientRecords.getClientRecordLength();
+            
+            int intClientCounter = 0;
+            
+            if(booAllClients)
+            {
+                //write all details to the file
+                intClientCounter = 0;
+            }
+            else
+            {
+                //only write the currtly selected client to the report
+                //set the counters for the loop so it only prints the current client
+                int intSelIndex = this.jComboBox_ClientID.getSelectedIndex();
+                intClientCounter = intSelIndex;
+                intClientCount = intClientCounter+1;
+            }
+            
+            for(; intClientCounter < intClientCount; intClientCounter++)
+            {//1                  
+                ClientRecord objCliRec = objClientRecords.getClientRecord(intClientCounter); 
+
+                out.write(objCliRec.getClientID() + ", ");
+
+                out.write(objCliRec.getClientName() + ", ");
+
+                out.write(objCliRec.getClientPhone() + "\n\n");
+
+                int intCaseCount = objCliRec.getClientCaseRecordLength();
+
+                if(intCaseCount > 0)
+                {//2
+                    for(int intCaseCounter = 0; intCaseCounter < intCaseCount; intCaseCounter++)
+                    {//3            
+                        ClientCaseRecord objCliCaseRec = objCliRec.getClientCaseRecord(intCaseCounter);
+
+                        out.write("\t" + objCliCaseRec.getClientCaseRecordID() + ", CASE: ");
+
+                        out.write("\t" + objCliCaseRec.getClientCaseState() + "\n\n");
+
+                        int intTaskCount = objCliCaseRec.getClientTaskLength();
+                        if(intTaskCount > 0)
+                        {//4
+                            double dblTotalHours = 0;
+                            
+                            for(int intTaskCounter = 0; intTaskCounter < intTaskCount; intTaskCounter++)
+                            {//5            
+                                Task objTask = objCliCaseRec.getClientTaskRecord(intTaskCounter);
+
+                                out.write("\t\t" + objTask.getTaskID() + ", ");
+
+                                out.write(objTask.getTaskDate() + ", ");
+                                
+                                dblTotalHours += Double.parseDouble(objTask.getTaskDuration());
+                                out.write(objTask.getTaskDuration() + ", ");
+
+                                out.write(objTask.getTaskDescription() + "\n");
+                            }//5
+                            out.write("\n\t\tTotal Billable Hours : " + Double.toString(dblTotalHours) + "\n\n");
+                        }//4
+                    }//3
+                }//2
+            }//1
+            //Close the output stream
+            out.close();
+        }catch (Exception e)
+        {//Catch exception if any
+            System.err.println("Error: " + e.getMessage());
+        }
+    }
+//------------------------------------------------------------------------------    
+    public File GetFileFromDLG(boolean booOpenDLG, String strFileExt){
+        
+        JFileChooser ReportFilename = new JFileChooser();
+        File curFile = null;
+        
+        ReportFilename.addChoosableFileFilter(new MyFilter(strFileExt));
+        // Open file dialog.
+        int result = 0;
+        
+        if(booOpenDLG)
+            result = ReportFilename.showOpenDialog(menuBar);
+        else
+            result = ReportFilename.showSaveDialog(menuBar);
+        
+        // Determine which button was clicked to close the dialog
+        switch (result) {
+          case JFileChooser.APPROVE_OPTION:
+            // Approve (Open or Save) was clicked
+              // Get the currently selected file
+                curFile = ReportFilename.getSelectedFile();
+            break;
+          case JFileChooser.CANCEL_OPTION:
+            // Cancel or the close-dialog icon was clicked
+            break;
+          case JFileChooser.ERROR_OPTION:
+            // The selection process did not complete successfully
+            break;
+        }
+        return curFile;
+    }
+//------------------------------------------------------------------------------    
+
+    @Action
+    public void AddCient() {
+        System.out.printf("\nButton ADD CLIENT\n");
+        jTextField_AddNewClient_ID.setText( this.objClientRecords.getNewClientID());
+        jDialog_AddClient.setVisible(true);
+    }
+
+    @Action
+    public void DeleteClient() {
+        System.out.printf("\nButton DELETE CLIENT\n");
+        this.jTextArea_ClientDetailsMessage.setText("UNDER DEVELOPMENT!");
+        this.jDialog_MessageBox.setVisible(true);        
+    }
+
+    @Action
+    public void AddCase() {
+        System.out.printf("\nButton ADD CASE\n");
+        if(this.jComboBox_ClientID.getItemCount() > 0)
+        {
+            jDialog_AddNewCase.setVisible(true);
+        }else{
+                this.jTextArea_ClientDetailsMessage.setText("You cannot add a Case without a Client!");
+                this.jDialog_MessageBox.setVisible(true);
+        }
+    }
+
+    @Action
+    public void DeleteCase() {
+        System.out.printf("\nButton DELETE CASE\n");
+        this.jTextArea_ClientDetailsMessage.setText("UNDER DEVELOPMENT!");
+        this.jDialog_MessageBox.setVisible(true);        
+    }
+
+    @Action
+    public void AddTask() {
+        System.out.printf("\nButton ADD TASK\n");
+        if(this.jComboBox_ClientID.getItemCount() > 0 && this.jComboBox_ClientCases.getItemCount() > 0)
+        {
+            String strClientID = this.jComboBox_ClientID.getSelectedItem().toString();
+
+            int intCaseCount = this.objClientRecords.getClientRecord(strClientID, 0).getClientCaseRecordLength();
+
+            if(intCaseCount > 0)
+            {
+                jDialog_AddNewTask.setVisible(true);
+            }else{
+                this.jTextArea_ClientDetailsMessage.setText("You cannot add a Task without a Case or Client!");
+                this.jDialog_MessageBox.setVisible(true);
+            }
+        }else{
+                this.jTextArea_ClientDetailsMessage.setText("You cannot add a Task without a Case or Client!");
+                this.jDialog_MessageBox.setVisible(true);
+        }
+    }
+
+    @Action
+    public void DeleteTask() {
+        System.out.printf("\nButton DELETE TASK\n");
+        this.jTextArea_ClientDetailsMessage.setText("UNDER DEVELOPMENT!");
+        this.jDialog_MessageBox.setVisible(true);        
+    }
+
+    @Action
+    public void AddNewClient_Cancel() {
+        System.out.printf("\nButton ADD NEW CLIENT Cancel\n");
+        jDialog_AddClient.setVisible(false);
+    }
+
+    @Action
+    public void AddNewClient_OK() {
+        
+        jDialog_AddClient.setVisible(false);
+
+        int intIndex = this.jComboBox_ClientID.getItemCount();
+        
+        String strAddClientID = jTextField_AddNewClient_ID.getText();
+        String strAddClientName = jTextField_AddNewClient_Name.getText();
+        String strAddClientPhone = jTextField_AddNewClient_Phone.getText();
+        
+        this.objClientRecords.addClientRecord(strAddClientID, strAddClientName, strAddClientPhone, intIndex );
+
+        jComboBox_ClientID.removeAllItems();
+
+        LoadClientDetailsIntoTheGUI(intIndex);
+    
+        jComboBox_ClientCases.removeAllItems();        
+        jComboBox_ClientTasks.removeAllItems();
+        SetCaseOpenCloseRadioButtons(false);
+    }
+
+    @Action
+    public void AddNewCase_Cancel() {
+        System.out.printf("\nButton ADD NEW CASE Cancel\n");
+        jDialog_AddNewCase.setVisible(false);
+    }
+
+    @Action
+    public void AddNewCase_OK() {
+        System.out.printf("\nButton ADD NEW CASE ok\n");
+        jDialog_AddNewCase.setVisible(false);
+        
+        int intIndex = this.jComboBox_ClientID.getSelectedIndex();
+        
+        String strID = jComboBox_ClientID.getSelectedItem().toString();
+        String strNewCase_ID = this.jTextField_AddNewCase_ID.getText();
+        
+        this.objClientRecords.getClientRecord(strID, 0).addClientCaseRecord(strNewCase_ID, true);
+        
+        jComboBox_ClientID.removeAllItems();
+        jComboBox_ClientCases.removeAllItems();        
+        jComboBox_ClientTasks.removeAllItems();
+
+        LoadClientDetailsIntoTheGUI(intIndex);
+        
+        this.jComboBox_ClientCases.setSelectedItem(strNewCase_ID);
+    
+    }
+
+    @Action
+    public void AddNewTask_Cancel() {
+        System.out.printf("\nButton ADD NEW TASK Cancel\n");
+        jDialog_AddNewTask.setVisible(false);
+    }
+
+    @Action
+    public void AddNewTask_OK() {
+        System.out.printf("\nButton ADD NEW TASK ok\n");
+        jDialog_AddNewTask.setVisible(false);
+        
+        int intClientIndex = this.jComboBox_ClientID.getSelectedIndex();
+        int intCaseIndex = this.jComboBox_ClientCases.getSelectedIndex();
+        
+        String strID = jComboBox_ClientID.getSelectedItem().toString();
+        String strCaseID = jComboBox_ClientCases.getSelectedItem().toString();
+
+        String strTaskDescription = this.jTextField_AddNewTask_Task.getText();
+        String strDuration = this.jComboBox_AddNewTask_Duration.getSelectedItem().toString();
+        String strDate = this.jTextField_AddNewTask_Date.getText();
+
+        int intTaskCount = objClientRecords.getClientRecord(strID, 0).getClientCaseRecord(strCaseID, 0).getClientTaskLength();
+        String strTaskID = Integer.toString(intTaskCount+1);
+
+        this.objClientRecords.getClientRecord(strID, 0).getClientCaseRecord(strCaseID, 0)
+                .addTask(strTaskID, strDate, strDuration, strTaskDescription, strID);
+
+
+        jComboBox_ClientID.removeAllItems();
+        jComboBox_ClientCases.removeAllItems();        
+        jComboBox_ClientTasks.removeAllItems();
+
+        LoadClientDetailsIntoTheGUI(intClientIndex);
+
+        this.jComboBox_ClientCases.setSelectedItem(intCaseIndex);
+
+        intTaskCount = objClientRecords.getClientRecord(strID, 0).getClientCaseRecord(strCaseID, 0).getClientTaskLength();
+        LoadClientCaseTaskDetailsIntoTheGUI(strID, strCaseID, intTaskCount-1);
+       
+    }
+
+    @Action
+    public void ClientDetailsMessage_OK() {
+        this.jDialog_MessageBox.setVisible(false);
+        this.jTextArea_ClientDetailsMessage.setText("");
+    }
+
+    @Action
+    public void CloseRadioButtonClicked() {
+        if(jComboBox_ClientID.getSelectedItem() != null && jComboBox_ClientCases.getSelectedItem() != null)
+        {
+            String strClientID = jComboBox_ClientID.getSelectedItem().toString();
+            String strCaseID = jComboBox_ClientCases.getSelectedItem().toString();
+            if(strClientID != null && strCaseID != null)
+            {        
+                objClientRecords.getClientRecord(strClientID, 0).getClientCaseRecord(strCaseID, 0).setClientCaseRecordOpen(false);
+            }
+        }
+    }
+
+    @Action
+    public void OpenRadioButtonClicked() {
+        
+        if(jComboBox_ClientID.getSelectedItem() != null && jComboBox_ClientCases.getSelectedItem() != null)
+        {
+            String strClientID = jComboBox_ClientID.getSelectedItem().toString();
+            String strCaseID = jComboBox_ClientCases.getSelectedItem().toString();
+            if(strClientID != null && strCaseID != null)
+            {        
+                objClientRecords.getClientRecord(strClientID, 0).getClientCaseRecord(strCaseID, 0).setClientCaseRecordOpen(true);
+            }
+        }
+    }
+    
+    @Action
+    public void MainWindow_SaveChanges() {
+        System.out.printf("\nButton Main Window Save Changes\n");
+        try
+        {
+            File objFile = GetFileFromDLG(false,".xml");
+            if(objFile != null)
+            {
+                SaveClientDetailsToXMLFile(objFile);
+                this.jTextArea_ClientDetailsMessage.setText("Finished Saving Changes\n");
+                this.jDialog_MessageBox.setVisible(true);  
+            }
+        }
+        catch (SAXParseException err)
+        {
+            System.out.println ("** Parsing error" + ", line " 
+                 + err.getLineNumber () + ", uri " + err.getSystemId ());
+            System.out.println(" " + err.getMessage ());
+
+        }
+        catch (SAXException e)
+        {
+            Exception x = e.getException ();
+            ((x == null) ? e : x).printStackTrace ();
+
+        }
+        catch (Throwable t)
+        {
+            t.printStackTrace ();
+        }            
+    }
+
+    @Action
+    public void MainWindow_Exit() {
+        System.out.printf("\nButton Main Window Cancel\n");
+        System.exit(0);
+    }
+    
+    @Action
+    public void Reports_AllClients() {
+        boolean booAllClients = true;
+        File objFile = GetFileFromDLG(false,".txt");
+        GenerateClientCaseReport(objFile, booAllClients);
+        if(objFile != null)
+        {
+            this.jTextArea_ClientDetailsMessage.setText("Finished Writing All Client Report\n");
+            this.jDialog_MessageBox.setVisible(true);  
+        }
+    }
+
+    @Action
+    public void ReportsCurrentClient() {
+        boolean booAllClients = false;
+        File objFile = GetFileFromDLG(false,".txt");
+        GenerateClientCaseReport(objFile, booAllClients);
+        if(objFile != null)
+        {
+            this.jTextArea_ClientDetailsMessage.setText("Finished Writing One Client Report\n");
+            this.jDialog_MessageBox.setVisible(true);  
+        }
+
+    }
+
+    @Action
+    public void MainWindow_LoadXMLDetails() {
+        LoadXmlData();
+        this.jButton_MainWindow_SaveChanges.setEnabled(true);
+        this.jButton_ReportsAllClients.setEnabled(true);
+        this.jButton_ReportsCurrentCleint.setEnabled(true);
+    }
+
+    @Action
+    public void MainWindow_LoadDBDetails() {
+        LoadDBData();
+        this.jButton_MainWindow_SaveChanges.setEnabled(true);
+        this.jButton_ReportsAllClients.setEnabled(true);
+        this.jButton_ReportsCurrentCleint.setEnabled(true);
+
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton jButtonAddNewTask_Cancel;
+    private javax.swing.JButton jButton_AddCase;
+    private javax.swing.JButton jButton_AddClient;
+    private javax.swing.JButton jButton_AddNewCase_Cancel;
+    private javax.swing.JButton jButton_AddNewCase_OK;
+    private javax.swing.JButton jButton_AddNewClient_Cancel;
+    private javax.swing.JButton jButton_AddNewClient_OK;
+    private javax.swing.JButton jButton_AddNewTask_OK;
+    private javax.swing.JButton jButton_AddTask;
+    private javax.swing.JButton jButton_ClientDetailsMessage_OK;
+    private javax.swing.JButton jButton_DeleteCase;
+    private javax.swing.JButton jButton_DeleteClient;
+    private javax.swing.JButton jButton_DeleteTask;
+    private javax.swing.JButton jButton_MainWindow_Exit;
+    private javax.swing.JButton jButton_MainWindow_LoadXmlDetails;
+    private javax.swing.JButton jButton_MainWindow_SaveChanges;
+    private javax.swing.JButton jButton_MainailsWindow_LoadDBDetails;
+    private javax.swing.JButton jButton_ReportsAllClients;
+    private javax.swing.JButton jButton_ReportsCurrentCleint;
+    private javax.swing.JComboBox jComboBox_AddNewTask_Duration;
+    private javax.swing.JComboBox jComboBox_ClientCases;
+    private javax.swing.JComboBox jComboBox_ClientID;
+    private javax.swing.JComboBox jComboBox_ClientTasks;
+    private javax.swing.JDialog jDialog_AddClient;
+    private javax.swing.JDialog jDialog_AddNewCase;
+    private javax.swing.JDialog jDialog_AddNewTask;
+    private javax.swing.JDialog jDialog_MessageBox;
+    private javax.swing.JLabel jLabel_AddNewCLient_Phone;
+    private javax.swing.JLabel jLabel_AddNewCase;
+    private javax.swing.JLabel jLabel_AddNewClient_ID;
+    private javax.swing.JLabel jLabel_AddNewClient_Name;
+    private javax.swing.JLabel jLabel_AddNewTask_Date;
+    private javax.swing.JLabel jLabel_AddNewTask_Duration;
+    private javax.swing.JLabel jLabel_AddNewTask_Task;
+    private javax.swing.JLabel jLabel_Cases;
+    private javax.swing.JLabel jLabel_ClientID;
+    private javax.swing.JLabel jLabel_ClientName;
+    private javax.swing.JLabel jLabel_ClientPhone;
+    private javax.swing.JLabel jLabel_TaskDate;
+    private javax.swing.JLabel jLabel_TaskDuration;
+    private javax.swing.JLabel jLabel_Tasks;
+    private javax.swing.JLabel jLabel_TotalBillableHours;
+    private javax.swing.JPanel jPanel_Case;
+    private javax.swing.JPanel jPanel_Client;
+    private javax.swing.JPanel jPanel_ClientTaskDetails;
+    private javax.swing.JPanel jPanel_ClientrDetails;
+    private javax.swing.JPanel jPanel_GenerateReport;
+    private javax.swing.JPanel jPanel_LoadDetails;
+    private javax.swing.JPanel jPanel_MainWindow;
+    private javax.swing.JPanel jPanel_Task;
+    private javax.swing.JRadioButton jRadioButton_CaseClose;
+    private javax.swing.JRadioButton jRadioButton_CaseOpen;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea_ClientDetailsMessage;
+    private javax.swing.JTextField jTextField_AddNewCase_ID;
+    private javax.swing.JTextField jTextField_AddNewClient_ID;
+    private javax.swing.JTextField jTextField_AddNewClient_Name;
+    private javax.swing.JTextField jTextField_AddNewClient_Phone;
+    private javax.swing.JTextField jTextField_AddNewTask_Date;
+    private javax.swing.JTextField jTextField_AddNewTask_Task;
+    private javax.swing.JTextField jTextField_ClientName;
+    private javax.swing.JTextField jTextField_ClientPhone;
+    private javax.swing.JTextField jTextField_TaskDate;
+    private javax.swing.JTextField jTextField_TaskDuration;
+    private javax.swing.JTextField jTextField_TotalBillableHours;
+    private javax.swing.JPanel mainPanel_ClientCaseDetails;
+    private javax.swing.JMenuBar menuBar;
+    private javax.swing.JProgressBar progressBar;
+    private javax.swing.JLabel statusAnimationLabel;
+    private javax.swing.JLabel statusMessageLabel;
+    private javax.swing.JPanel statusPanel;
+    // End of variables declaration//GEN-END:variables
+
+    private final Timer messageTimer;
+    private final Timer busyIconTimer;
+    private final Icon idleIcon;
+    private final Icon[] busyIcons = new Icon[15];
+    private int busyIconIndex = 0;
+
+    private JDialog aboutBox;
+}
+ class MyFilter extends javax.swing.filechooser.FileFilter {
+        private String strFileExt;   
+
+        public MyFilter(String strExt)
+        {
+            strFileExt = strExt;
+        }
+        public MyFilter()
+        {
+            strFileExt = ".txt";
+        }
+        public boolean accept(File file) {
+            String filename = file.getName();
+            return filename.endsWith(strFileExt);
+        }
+        public String getDescription() {
+            return strFileExt;
+        }
+    }
